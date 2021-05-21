@@ -12,13 +12,14 @@ import LinkIcon from '@material-ui/icons/Link'
 import EditIcon from '@material-ui/icons/Edit'
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn'
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import {getUserInfo, isAuthInfo, loadDefaultImage} from 'store/selectors/Selectors'
+import { getUserInfo, isAuthInfo, loadDefaultImage } from 'store/selectors/Selectors'
 import { useDispatch, useSelector } from 'react-redux'
 import { uploadPhoto, logout } from 'store/ducks/User/UserReducer'
 import { EditProfile } from './EditProfile'
 
 const useStyles = makeStyles((theme) => ({
   profile: {
+    textAlign: 'center',
     '& .image-wrapper': {
       textAlign: 'center',
       maxWidth: 200,

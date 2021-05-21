@@ -16,7 +16,6 @@ const getPost = asyncHandler(async (req, res) => {
         path: 'comments',
         populate: { path: 'author', select: ['name', 'photo'] }
       })
-
     res.json(post)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
@@ -25,18 +24,22 @@ const getPost = asyncHandler(async (req, res) => {
 
 const createNewPost = asyncHandler(async (req, res) => {
   const { title, body } = req.body
+  try {
+    const tags = body.split(' ').filter(word => word.startsWith('#'))
+    const post = await Post.create({ body, tags, author: req.user.id })
+    await post.save()
 
-  const post = await Post.create({ title, body, author: req.user.id })
-  await post.save()
-
-  res.json({ message: 'Post was created' })
+    res.json({ message: 'FullPost was created' })
+  } catch (error) {
+    res.status(400).json({ message: 'Something goes wrong' })
+  }
 })
 
 const deletePost = asyncHandler(async (req, res) => {
   try {
     await Post.findByIdAndDelete(req.params.id)
     await Comment.deleteMany({ post: req.params.id })
-    res.json({ message: 'Post delete' })
+    res.json({ message: 'FullPost delete' })
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }

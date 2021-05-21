@@ -10,6 +10,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    textAlign: 'center',
     maxWidth: 600,
     margin: '10% auto',
     padding: 25
@@ -35,13 +36,13 @@ const NewPost = () => {
   const { handleSubmit, control, formState: { errors } } = useForm()
 
   if (!isAuth) {
-    return <Redirect to='/posts-list' />
+    return <Redirect to='/main' />
   }
 
   const handleRegistration = (data) => {
     dispatch(addNewPost(data))
 
-    history.push('/posts-list')
+    history.push('/main')
   }
 
   const handleError = (errors) => {
@@ -105,7 +106,7 @@ const NewPost = () => {
 
   // return <form className={classes.root} onSubmit={handleSubmit(onSubmit)}>
   //   <Typography variant="h3">
-  //     New Post
+  //     New FullPost
   //     </Typography>
   //   <div>
   //     <Controller

@@ -6,18 +6,13 @@ import { PostCard } from '../components/PostsList/PostCard'
 import { loadPostList, deletePost } from '../store/ducks/PostsList/PostsListReducer'
 import { LoginNotification } from '../components/PostsList/Profile/LoginNotification'
 import { Profile } from '../components/PostsList/Profile/Profile'
+import { PopularTags } from 'components/PostsList/PopularTags'
+import { PostList } from '../components/PostList';
+import PostPage from './FullPostPage';
+import { Route } from 'react-router-dom';
+import FullPost from '../components/FullPost';
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    display: 'flex',
-    height: 160,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-}))
-
-const PostsList = ({ loadPostList, postsList, deletePost, userInfo }) => {
-  const classes = useStyles()
+const Main = ({ loadPostList, postsList, deletePost, userInfo }) => {
   const isAuth = useSelector(state => isAuthInfo(state))
 
   useEffect(() => {
@@ -26,9 +21,8 @@ const PostsList = ({ loadPostList, postsList, deletePost, userInfo }) => {
 
   const showPosts = () => {
     if (postsList.length === 0) {
-      return <Card className={classes.card}>
+      return <Card >
         <Typography gutterBottom variant="h6" color='primary'> There are no posts yet</Typography>
-
       </Card>
     }
     return postsList.map(post => {
@@ -37,11 +31,20 @@ const PostsList = ({ loadPostList, postsList, deletePost, userInfo }) => {
   }
 
   return <Grid container spacing={2}>
-    <Grid item md={8} xs={12}>
-      {showPosts()}
-    </Grid>
-    <Grid item md={4} xs={12}>
+    <Grid item md={3} xs={12}>
       {isAuth ? <Profile /> : <LoginNotification />}
+    </Grid>
+    <Grid item md={6} xs={12}>
+      <Route exact path='/main'>
+        <PostList postsList={postsList} deletePost={deletePost} userInfo={userInfo} />
+      </Route>
+      <Route path='/main/post'>
+        <FullPost />
+      </Route>
+      {/*{showPosts()}*/}
+    </Grid>
+    <Grid item md={3} xs={12}>
+      <PopularTags />
     </Grid>
   </Grid>
 }
@@ -53,4 +56,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { loadPostList, deletePost })(PostsList)
+export default connect(mapStateToProps, { loadPostList, deletePost })(Main)

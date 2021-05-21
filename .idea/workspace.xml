@@ -19,7 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53e04fab-5b55-433e-8e47-21e4d92a5492" name="Default Changelist" comment="" />
+    <list default="true" id="53e04fab-5b55-433e-8e47-21e4d92a5492" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/components/FullPost.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/PostList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/PostControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PostControllers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Post/Post.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList/PostCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList/Profile/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/NewPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/NewPost.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/PostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/FullPostPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/PostsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/PostDetail/PostDetailReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/PostDetail/PostDetailReducer.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,11 +61,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\components" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\PostData" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\Initialize" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\Posts" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\User" />
-      <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -63,7 +79,8 @@
       <workItem from="1618083434818" duration="650000" />
       <workItem from="1618175815343" duration="480000" />
       <workItem from="1621452148677" duration="1782000" />
-      <workItem from="1621453963700" duration="823000" />
+      <workItem from="1621453963700" duration="3964000" />
+      <workItem from="1621542770177" duration="754000" />
     </task>
     <servers />
   </component>
@@ -81,5 +98,11 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="500" y="0" width="1436" height="1022" key="dock-window-1" timestamp="1621543448797">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="500" y="0" width="1436" height="1022" key="dock-window-1/0.0.1920.1040@0.0.1920.1040" timestamp="1621543448797" />
   </component>
 </project>

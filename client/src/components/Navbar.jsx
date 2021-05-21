@@ -21,10 +21,10 @@ export const Navbar = () => {
 
   const isFetching = useSelector(state => isFetchingInfo(state))
 
-  return <AppBar position="static">
-    <Toolbar>
+  return <AppBar position="fixed">
+    <Toolbar >
       <Typography variant="h6" className={classes.title}>
-        <Button color="inherit" component={Link} to='/posts-list'>
+        <Button color="inherit" component={Link} to='/main'>
           Post List
         </Button>
         <Button color="inherit" component={Link} to='/new-post'>

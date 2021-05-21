@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
+    position: 'fixed',
     padding: '20px 35px',
     maxWidth: 400,
     margin: '0 auto'

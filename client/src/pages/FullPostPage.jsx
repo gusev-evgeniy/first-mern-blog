@@ -1,13 +1,13 @@
-import { Grid } from '@material-ui/core'
+import { CircularProgress, Grid, LinearProgress } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, withRouter } from 'react-router-dom'
-import {cleanPost, loadPost} from 'store/ducks/PostDetail/PostDetailReducer'
-import { isAuthInfo, postDetail } from 'store/selectors/Selectors'
+import { cleanPost, loadPost } from 'store/ducks/PostDetail/PostDetailReducer'
+import { isAuthInfo, isInitializedInfo, postDetail } from 'store/selectors/Selectors'
 import { CommentsSection } from '../components/Post/Comments/CommentsSection'
-import Post from '../components/Post/Post'
+import FullPost from '../components/FullPost'
 
-const PostPage = ({ match }) => {
+const FullPostPage = ({ match }) => {
   const postData = useSelector(state => postDetail(state))
   const isAuth = useSelector(state => isAuthInfo(state))
   const dispatch = useDispatch()
@@ -21,9 +21,13 @@ const PostPage = ({ match }) => {
     return <Redirect to="/login" />
   }
 
+  if (postData.isLoading) {
+    return <CircularProgress />
+  }
+
   return <Grid container spacing={2}>
     <Grid item sm={7} xs={12}>
-      <Post postData={postData} postId={postId} />
+      <FullPost postData={postData} postId={postId} />
     </Grid>
     <Grid item sm={5} xs={12}>
       <CommentsSection postId={postId} commentsInfo={postData.comments} />
@@ -31,4 +35,4 @@ const PostPage = ({ match }) => {
   </Grid>
 }
 
-export default withRouter(PostPage)
+export default withRouter(FullPostPage)

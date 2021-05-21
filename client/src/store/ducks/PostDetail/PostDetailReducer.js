@@ -3,7 +3,7 @@ import { instance } from 'store/api'
 const UPDATE_LIKES = 'UPDATE_LIKES'
 const FETCH_DATA = 'FETCH_DATA'
 const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
-const CLEAN_POST = 'CLEAN_POST'
+const CHANGE_LOADING = 'CHANGE_LOADING'
 
 const initialState = {
   body: undefined,
@@ -12,7 +12,8 @@ const initialState = {
   likes: [],
   snippets: undefined,
   title: undefined,
-  _id: ""
+  _id: "",
+  isLoading: false
 }
 
 export const PostDetailReducer = (state = initialState, action) => {
@@ -26,9 +27,8 @@ export const PostDetailReducer = (state = initialState, action) => {
     case UPDATE_COMMENTS: {
       return { ...state, comments: [...state.comments, action.payload] }
     }
-    case CLEAN_POST: {
-      debugger
-      return {status: 'UNMOUNTED'}
+    case CHANGE_LOADING: {
+      return { ...state, isLoading: action.payload }
     }
     default:
       return state
@@ -37,7 +37,7 @@ export const PostDetailReducer = (state = initialState, action) => {
 
 export const updateLikes = (likes) => ({ type: UPDATE_LIKES, payload: likes })
 export const fetchData = (data) => ({ type: FETCH_DATA, payload: data })
-export const cleanPost = () => ({ type:CLEAN_POST })
+export const changeIsLoading = (boolean) => ({ type: CHANGE_LOADING, payload: boolean })
 
 export const sendLike = (postId) => async dispatch => {
   try {
@@ -61,10 +61,13 @@ export const deleteLike = (postId) => async dispatch => {
 
 export const loadPost = (id) => async dispatch => {
   try {
+    dispatch(changeIsLoading(true))
     const response = await instance.get(`/post/${id}`)
+    dispatch(changeIsLoading(false))
 
     dispatch(fetchData(response.data))
   } catch (error) {
+    dispatch(changeIsLoading(false))
     console.log(error.response.data.message)
   }
 }
