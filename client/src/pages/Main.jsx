@@ -2,15 +2,16 @@ import { Button, Grid, Hidden, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { isAuthInfo } from 'store/selectors/Selectors'
-import { LoginNotification } from '../components/PostsList/Profile/LoginNotification'
-import { Profile } from '../components/PostsList/Profile/Profile'
-import { PopularTags } from 'components/PostsList/PopularTags'
-import { PostList } from '../components/PostList';
+import { LoginNotification } from '../components/Profile/LoginNotification'
+import { Profile } from '../components/Profile/Profile'
+import { PopularTags } from 'components/PopularTags'
+import { PostList } from './PostList';
 import { Route } from 'react-router-dom';
-import FullPostPage from './FullPostPage'
+import FullPostPage from './FullPost'
 import CreateIcon from '@material-ui/icons/Create';
 import { ModalBlock } from 'components/ModalBlock'
 import { NewPostForm } from 'components/NewPostForm'
+import { SearchSection } from './SearchSection'
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -76,6 +77,9 @@ export const Main = () => {
       </Route>
       <Route path='/main/post/:id'>
         <FullPostPage />
+      </Route>
+      <Route path='/main/search'>
+        <SearchSection />
       </Route>
     </Grid>
     <Grid item md={3} xs={12}>

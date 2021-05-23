@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, withRouter } from 'react-router-dom'
 import { changeIsLoading, deleteLike, fetchData, loadPost, sendLike } from 'store/ducks/PostDetail/PostDetailReducer'
 import { getPostDetail, getPostDetailStatus, getUserInfo, isAuthInfo, loadDefaultImage } from 'store/selectors/Selectors'
-
 import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import RepostIcon from '@material-ui/icons/RepeatOutlined';
 import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import ShareIcon from '@material-ui/icons/ReplyOutlined';
 
 const useStyles = makeStyles((theme) => ({
   tweetUserName: {
@@ -54,10 +52,17 @@ const useStyles = makeStyles((theme) => ({
   tweetComments: {
     maxHeight: 800,
     overflowY: 'scroll'
+  },
+  postImage: {
+    marginTop: 15,
+    width: '100%',
+    height: '100%',
+    borderRadius: 15,
+    objectFit: 'contain'
   }
 }))
 
-const FullPostPage = ({ match }) => {
+const FullPost = ({ match }) => {
   const classes = useStyles()
   const postData = useSelector(state => getPostDetail(state))
   const isLoading = useSelector(state => getPostDetailStatus(state))
@@ -115,7 +120,7 @@ const FullPostPage = ({ match }) => {
       <div className={classes.tweetsHeaderUser}>
         <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
         <Typography>
-          <b>John Smith</b>&nbsp;
+          <b>{postData.author.name}</b>&nbsp;
         <div>
             <span className={classes.tweetUserName}>@{postData.author.name}</span>&nbsp;
           </div>
@@ -123,14 +128,12 @@ const FullPostPage = ({ match }) => {
       </div>
       <Typography className={classes.fullTweetText} gutterBottom>
         {postData.body}
+        {postData.image && <img className={classes.postImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in twet" />}
       </Typography>
       <Typography>
         <span className={classes.tweetUserName}>
-          {postData.author.name}
+          {postData.created}
         </span>
-        <span className={classes.tweetUserName}>
-          1ч
-      </span>
       </Typography>
       <div className={`${classes.tweetFooter} ${classes.fullTweetFooter}`} >
         <IconButton>
@@ -141,9 +144,6 @@ const FullPostPage = ({ match }) => {
         </IconButton>
         <IconButton>
           <LikeIcon style={{ fontSize: 25 }} />
-        </IconButton>
-        <IconButton>
-          <ShareIcon style={{ fontSize: 25 }} />
         </IconButton>
       </div>
     </Paper>
@@ -156,4 +156,4 @@ const FullPostPage = ({ match }) => {
   </>
 }
 
-export default withRouter(FullPostPage)
+export default withRouter(FullPost)

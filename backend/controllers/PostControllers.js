@@ -8,7 +8,13 @@ const Tag = require('../models/TagModel')
 
 const getAllPosts = asyncHandler(async (req, res) => {
   try {
-    let posts = await Post.find().populate('author', ['name', 'photo'])
+    let posts = await Post.find().populate('author', ['name', 'photo']).populate({
+      path: 'reply',
+      populate: {
+        path: 'author',
+        select: ['name', 'photo']
+      }
+    })
     res.json(posts)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
@@ -30,7 +36,6 @@ const getPost = asyncHandler(async (req, res) => {
 })
 
 const getPostsByTag = asyncHandler(async (req, res) => {
-  console.log('tag')
   try {
     const posts = await Post.find({ tags: req.query.tag })
       .populate('author', ['name', 'photo'])
@@ -45,25 +50,40 @@ const getPostsByTag = asyncHandler(async (req, res) => {
 })
 
 const createNewPost = asyncHandler(async (req, res) => {
-  const { body, tags } = req.body
-  tags = tags.split(' ')
+  let { body, tags, replyPostId } = req.body
 
   try {
-    const post = await Post.create({ body, tags, author: req.user.id })
+    const post = await Post.create({ body, tags, author: req.user.id, reply: replyPostId })
     await post.save()
 
-    res.json({ message: 'Post was created' })
+    const topTags = await new Tag({ topTags: { 'hello': 14 } })
+    await topTags.save()
+
+    tags = tags.split(' ').forEach(tag => {
+
+    })
+
+    res.json(post)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }
 })
 
+const addTags = async (tags) => {
+  const tagsArray = tags.split(' ')
+  try {
+    tagsArray.forEach(tag => {
+      const existTag = Tag.find()
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const createNewPhotoPost = asyncHandler(async (req, res) => {
   const file = req.file
-  console.log('step one')
-
+  console.log(file)
   if (!file) {
-    console.log('step error')
     return res.status(400).json({ message: 'Please choose files' })
   }
 
@@ -77,10 +97,11 @@ const createNewPhotoPost = asyncHandler(async (req, res) => {
     imageBase64: encode_image
   }
 
-  let post = await Post.create({ image: finalImg })
+  let post = await Post.findById(req.params.id)
+  post.image = finalImg
   await post.save()
 
-  res.json({ post })
+  res.json(post)
 })
 
 

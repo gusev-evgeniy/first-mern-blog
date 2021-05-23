@@ -30,7 +30,7 @@ export const loadPostList = () => async dispatch => {
     dispatch(fetchPosts(response.data))
   } catch (error) {
     dispatch(changeStatus(false))
-    console.log(error.response.data.message)
+    console.log(error)
   }
 }
 
@@ -47,29 +47,29 @@ export const loadPostListByTags = (tag) => async dispatch => {
 }
 
 export const addNewPost = (data) => async dispatch => {
-  const { body, tags, image } = data
-  const formData = new FormData()
-  formData.append('image', image)
+  const { body, tags, image, replyPostId } = data
+  console.log(replyPostId, image)
   try {
-    await instance.post('/post', { body, tags, formData }, {
+    const response = await instance.post('/post', { body, tags, replyPostId }, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
+    if (image) {
+      await dispatch(sendPostImage(image, response.data._id))
+    }
     dispatch(loadPostList())
+
   } catch (error) {
     console.log(error.response.data.message)
   }
 }
 
-export const sendPostImage = (photo) => async dispatch => {
+export const sendPostImage = (image, id) => async dispatch => {
   const formData = new FormData()
-  formData.append('photo', photo)
-
+  formData.append('photo', image)
   try {
-    console.log(formData)
-    await instance.post('/post/image', formData)
+    await instance.put(`/post/image/${id}`, formData)
   } catch (error) {
     console.log(error.response.data.message)
   }
@@ -77,7 +77,7 @@ export const sendPostImage = (photo) => async dispatch => {
 
 export const deletePost = (id) => async dispatch => {
   try {
-    await instance.delete(`/post/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+    await instance.delete(`/ post / ${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
     dispatch(loadPostList())
   } catch (error) {
     console.log(error.response.data.message)

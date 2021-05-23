@@ -17,11 +17,10 @@ const router = express.Router()
 router.get('/posts', getAllPosts)
 router.get('/posts/search', getPostsByTag)
 router.post('/post', [
-  check('title', 'Title not should be empty').notEmpty(),
   check('body', 'Body not should be empty').notEmpty(),
   authMiddleware
 ], createNewPost)
-router.post('/post/image', createNewPhotoPost)
+router.put('/post/image/:id', createNewPhotoPost)
 router.delete('/post/:id', authMiddleware, deletePost)
 router.get('/post/:id', getPost)
 router.post('/post/:id/comment', authMiddleware, createNewComment)

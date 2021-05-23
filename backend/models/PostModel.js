@@ -10,6 +10,7 @@ const PostSchema = new Schema({
     type: [String]
   },
   image: PhotoSchema,
+  reply: { type: Schema.Types.ObjectId, ref: 'Post' },
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   likes: [Schema.Types.ObjectId],
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],

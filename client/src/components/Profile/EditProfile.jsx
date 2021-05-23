@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, TextField } from '@material-ui/core'
 import React from 'react'
-import MyButton from './../../../utils/MyButton'
+import MyButton from '../../utils/MyButton'
 import EditIcon from '@material-ui/icons/Edit'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'

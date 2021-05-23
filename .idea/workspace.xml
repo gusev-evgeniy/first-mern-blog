@@ -20,21 +20,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53e04fab-5b55-433e-8e47-21e4d92a5492" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/components/FullPost.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/PostList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/PostControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PostControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/images/3464144d-08c7-45bd-a986-6d6517a65f38-SpiderVerse_cropped.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/images/3cbc014a-8e7a-48ed-a5c5-634ae13953f7-SpiderVerse_cropped.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/images/790eaa20-be21-45ec-875d-e7e1336f12b5-SMB3_Raccoon_Mario_Artwork.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/images/cfc2805d-ee2e-4aa6-a939-e57ce31804d8-SpiderVerse_cropped.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/PostRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/PostRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Post/Post.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList/PostCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostsList/Profile/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/NewPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/NewPost.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/PostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/FullPostPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/PostsList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/PostDetail/PostDetailReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/PostDetail/PostDetailReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NewPostForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NewPostForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Post/Comments/CommentForm.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Post/Comments/CommentsList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Post/Comments/CommentsSection.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/PostList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/PopularTags.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PopularTags.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/Profile/EditProfile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Profile/EditProfile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/Profile/LoginNotification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Profile/LoginNotification.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/PostsList/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Profile/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/FullPostPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/FullPost.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/NewPost.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/PostsList/PostsListReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/PostsList/PostsListReducer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,11 +69,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\pages" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\components" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\PostData" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\Initialize" />
       <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\Posts" />
-      <recent name="C:\Users\frank\Desktop\first-mern-blog-master\client\src\store\ducks\User" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -81,6 +89,8 @@
       <workItem from="1621452148677" duration="1782000" />
       <workItem from="1621453963700" duration="3964000" />
       <workItem from="1621542770177" duration="754000" />
+      <workItem from="1621794252727" duration="174000" />
+      <workItem from="1621794460559" duration="45000" />
     </task>
     <servers />
   </component>
@@ -100,6 +110,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621794322511">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1621794322511" />
     <state x="500" y="0" width="1436" height="1022" key="dock-window-1" timestamp="1621543448797">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

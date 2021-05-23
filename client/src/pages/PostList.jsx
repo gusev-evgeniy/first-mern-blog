@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CircularProgress, Typography } from '@material-ui/core';
-import { PostCard } from './PostsList/PostCard';
+import { PostCard } from '../components/PostCard';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostsList, getPostsListStatus, getUserInfo } from '../store/selectors/Selectors'

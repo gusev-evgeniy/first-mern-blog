@@ -4,7 +4,6 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
 import { Navbar } from './components/Navbar'
-import NewPost from './pages/NewPost'
 import { Signup } from './pages/Signup'
 import { Login } from './pages/Login'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -55,9 +54,6 @@ function App() {
           <Container className='container'>
             <Route path='/main'>
               <Main />
-            </Route>
-            <Route path='/new-post'>
-              <NewPost />
             </Route>
             <Route path='/signup'>
               <Signup />

@@ -26,10 +26,10 @@ export const Navbar = () => {
     <Toolbar >
       <Typography variant="h6" className={classes.title}>
         <Button color="inherit" component={Link} to='/main'>
-          Post List
+          Main
         </Button>
-        <Button color="inherit" component={Link} to='/new-post'>
-          New Post
+        <Button color="inherit" component={Link} to='/main/search'>
+          Search
         </Button>
       </Typography>
     </Toolbar>
