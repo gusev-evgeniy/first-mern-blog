@@ -1,6 +1,8 @@
 import { Divider, List, ListItem, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { loadPostListByTags } from 'store/ducks/PostsList/PostsListReducer'
 
 const useStyles = makeStyles((theme) => ({
   rightSideBlock: {
@@ -45,11 +47,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const items = [{ id: Math.random() * 1000, name: 'john', count: 1488 }]
+const items = [{ id: Math.random() * 1000, tag: 'summer', count: 1488 }]
 
 export const PopularTags = () => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
+  const handelClick = (tag) => {
+    dispatch(loadPostListByTags(tag))
+  }
 
   return (
     <Paper className={classes.rightSideBlock}>
@@ -60,16 +66,15 @@ export const PopularTags = () => {
         {items.map((obj) => (
           <React.Fragment key={obj._id}>
             <ListItem className={classes.rightSideBlockItem}>
-              <Link to={`/home/search?q=${obj.name}`}>
-                <ListItemText
-                  primary={obj.name}
-                  secondary={
-                    <Typography component="span" variant="body2" color="textSecondary">
-                      Твитов: {obj.count}
-                    </Typography>
-                  }
-                />
-              </Link>
+              <ListItemText
+                primary={obj.tag}
+                onClick={() => handelClick(obj.tag)}
+                secondary={
+                  <Typography component="span" variant="body2" color="textSecondary">
+                    Твитов: {obj.count}
+                  </Typography>
+                }
+              />
             </ListItem>
             <Divider component="li" />
           </React.Fragment>

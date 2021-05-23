@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { AppBar, Toolbar, Typography, Button, makeStyles, LinearProgress } from '@material-ui/core'
-import { useSelector } from 'react-redux'
 import { isFetchingInfo } from 'store/selectors/Selectors'
+import { useSelector } from 'react-redux';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {

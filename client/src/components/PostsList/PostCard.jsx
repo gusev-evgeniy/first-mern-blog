@@ -1,10 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
-import { Avatar, CardMedia, Paper } from '@material-ui/core'
+import { Avatar, Paper } from '@material-ui/core'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import IconButton from '@material-ui/core/IconButton'
@@ -18,10 +16,10 @@ import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
 const useStyles = makeStyles((theme) => ({
   tweet: {
     display: 'flex',
-    maxWidth: 600,
     position: 'relative',
     cursor: 'pointer',
-    alignItems: 'flex-start',
+    justifyContent: 'column',
+    alignItems: 'flex-end',
     padding: '15px 15px 0 15px',
     '&:hover': {
       backgroundColor: 'rgb(245, 248, 250)',
@@ -32,15 +30,13 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   tweetAvatar: {
-    position: 'relative',
-    top: -60,
     width: theme.spacing(6.5),
     height: theme.spacing(6.5),
     marginRight: 15,
   },
   tweetHeader: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     marginBottom: 10
   },
@@ -59,51 +55,69 @@ const useStyles = makeStyles((theme) => ({
   },
   tweetUserName: {
     color: '#00bcd4',
-    fontWeight: 700
+    fontWeight: 600,
+    fontSize: 19
   },
   tweetDate: {
     color: '#818181',
   },
+  likesCount: {
+    fontSize: 16,
+    marginLeft: 5
+  },
+  tagLink: {
+    color: 'red'
+  },
+  imageWrapper: {
+    maxWidth: 505,
+    height: 285,
+    overflow: 'hidden',
+    marginTop: 15,
+    borderRadius: 15
+  },
+  tweetImage: {
+    maxWidth: '100%',
+    maWheight: '100%',
+    objectFit: 'cover'
+  }
 }))
 
-export const PostCard = ({ postData, deletePost, userId }) => {
+export const PostCard = ({ postData, handleDeletePost, userId }) => {
   const classes = useStyles()
   const defaultUserImage = useSelector(state => loadDefaultImage(state))
 
-  dayjs.extend(relativeTime)
-
-  const deleteHandler = () => {
-    deletePost(postData._id)
-  }
   const showDeleteButton = () => {
     if (postData.author._id === userId) {
-      return <IconButton title="Delete Scream" className={classes.deleteButton} onClick={deleteHandler}>
+      return <IconButton title="Delete Scream" className={classes.deleteButton} onClick={() => { handleDeletePost(postData._id) }}>
         <DeleteOutline color="secondary" />
       </IconButton>
     }
   }
 
-  return <Link to={`/main/post`}>
+  return <Link to={`/main/post/${postData._id}`}>
     <Paper className={`${classes.tweet} ${classes.tweetHeader}`} variant="outlined">
-      <Avatar className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
+      <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
       <div className={classes.tweetContent}>
         <div className={classes.tweetHeader}>
           <div>
-            <span className={classes.tweetUserName}>John</span>&nbsp;
+            <span className={classes.tweetUserName}>{postData.author.name}</span>&nbsp;
               <span className={classes.tweetDate}>·</span>&nbsp;
               <span className={classes.tweetDate}>1ч назад</span>
           </div>
         </div>
         <Typography variant="body1" gutterBottom>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque eveniet explicabo quos reiciendis, architecto quas itaque dignissimos dolorem, voluptatibus accusamus porro consequatur. Voluptates consequatur aperiam corporis unde amet, rem eius.
-            {/* {images && <ImageList classes={classes} images={images} />} */}
+          {postData.body}
+          <div className={classes.imageWrapper}>
+            <img className={classes.tweetImage} src="https://images.squarespace-cdn.com/content/v1/52c9d908e4b0e87887310693/1570977177233-3MLE72XBCVKG0S2Y8DS5/ke17ZwdGBToddI8pDm48kPJa756O6kWVkUAihwdWcdF7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmFrKkuyfqIWRdt3lCufLMASBAVeBlkctbW4J4Fmip5HIl_Q1aajChv3WX3kxF93Eb/spiderman-into-spider-verse-5k-7b-2048x2048-1020x1020.jpg" alt="img in twet" />
+          </div>
+          {/* {images && <ImageList classes={classes} images={images} />} */}
         </Typography>
         <div className={classes.tweetFooter}>
           <div className={classes.tweetIcon}>
-            <IconButton>
+            <IconButton color='secondary'>
               <LikeIcon style={{ fontSize: 20 }} />
+              <span className={classes.likesCount}>{postData.likes.length}</span>
             </IconButton>
-            <span>1</span>
           </div>
           {/* <div>
             <IconButton>
@@ -111,15 +125,10 @@ export const PostCard = ({ postData, deletePost, userId }) => {
             </IconButton>
           </div> */}
           <div className={classes.tweetIcon}>
-            <IconButton>
+            <IconButton color='primary'>
               <CommentIcon style={{ fontSize: 20 }} />
             </IconButton>
           </div>
-          {/* <div>
-            <IconButton>
-              <ShareIcon style={{ fontSize: 20 }} />
-            </IconButton>
-          </div> */}
         </div>
       </div>
     </Paper>

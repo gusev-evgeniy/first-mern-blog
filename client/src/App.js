@@ -4,16 +4,13 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
 import { Navbar } from './components/Navbar'
-import PostPage from './pages/FullPostPage'
-import PostsList from './pages/Main'
 import NewPost from './pages/NewPost'
 import { Signup } from './pages/Signup'
 import { Login } from './pages/Login'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { auth } from './store/ducks/User/UserReducer'
 import { isInitializedInfo } from 'store/selectors/Selectors'
 import { initializeApp } from './store/ducks/Initialize/InitializeReducer'
-import Main from './pages/Main';
+import { Main } from './pages/Main';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +20,7 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: 'rgb(26, 145, 218)',
+      main: 'rgb(218, 80, 26)',
     },
     background: {
       default: '#fff',

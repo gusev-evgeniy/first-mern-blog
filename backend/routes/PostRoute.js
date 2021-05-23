@@ -3,21 +3,25 @@ const { check } = require('express-validator')
 
 const authMiddleware = require('../middleware/authMiddleware')
 const { getPost,
+  createNewPhotoPost,
   createNewComment,
   addLike,
   deleteLike,
   getAllPosts,
   createNewPost,
+  getPostsByTag,
   deletePost } = require('../controllers/PostControllers')
 
 const router = express.Router()
 
-router.get('/', getAllPosts)
-router.post('/', [
+router.get('/posts', getAllPosts)
+router.get('/posts/search', getPostsByTag)
+router.post('/post', [
   check('title', 'Title not should be empty').notEmpty(),
   check('body', 'Body not should be empty').notEmpty(),
   authMiddleware
 ], createNewPost)
+router.post('/post/image', createNewPhotoPost)
 router.delete('/post/:id', authMiddleware, deletePost)
 router.get('/post/:id', getPost)
 router.post('/post/:id/comment', authMiddleware, createNewComment)

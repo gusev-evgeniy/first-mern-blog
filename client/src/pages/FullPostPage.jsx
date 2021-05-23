@@ -1,15 +1,68 @@
-import { CircularProgress, Grid, LinearProgress } from '@material-ui/core'
+import { Avatar, CircularProgress, Divider, Grid, IconButton, LinearProgress, makeStyles, Paper, Typography } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, withRouter } from 'react-router-dom'
-import { cleanPost, loadPost } from 'store/ducks/PostDetail/PostDetailReducer'
-import { isAuthInfo, isInitializedInfo, postDetail } from 'store/selectors/Selectors'
-import { CommentsSection } from '../components/Post/Comments/CommentsSection'
-import FullPost from '../components/FullPost'
+import { changeIsLoading, deleteLike, fetchData, loadPost, sendLike } from 'store/ducks/PostDetail/PostDetailReducer'
+import { getPostDetail, getPostDetailStatus, getUserInfo, isAuthInfo, loadDefaultImage } from 'store/selectors/Selectors'
+
+import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
+import RepostIcon from '@material-ui/icons/RepeatOutlined';
+import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import ShareIcon from '@material-ui/icons/ReplyOutlined';
+
+const useStyles = makeStyles((theme) => ({
+  tweetUserName: {
+    color: '#808080',
+  },
+  tweetsHeaderUser: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  fullTweet: {
+    padding: 22,
+    paddingBottom: 0,
+    maxWidth: 600,
+  },
+  tweetAvatar: {
+    width: theme.spacing(6.5),
+    height: theme.spacing(6.5),
+    marginRight: 15,
+  },
+  fullTweetText: {
+    fontSize: 24,
+    marginTop: 20,
+    marginBottom: 20,
+    lineHeight: 1.3125,
+    wordBreak: 'break-word',
+  },
+  fullTweetFooter: {
+    margin: '0 auto',
+    borderTop: '1px solid #E6ECF0',
+    left: 0,
+    maxWidth: '100%',
+    justifyContent: 'space-around',
+    padding: '2px 0',
+    marginTop: 20,
+  },
+  tweetFooter: {
+    display: 'flex',
+    position: 'relative',
+    left: -13,
+    justifyContent: 'space-between',
+    maxWidth: 450,
+  },
+  tweetComments: {
+    maxHeight: 800,
+    overflowY: 'scroll'
+  }
+}))
 
 const FullPostPage = ({ match }) => {
-  const postData = useSelector(state => postDetail(state))
+  const classes = useStyles()
+  const postData = useSelector(state => getPostDetail(state))
+  const isLoading = useSelector(state => getPostDetailStatus(state))
   const isAuth = useSelector(state => isAuthInfo(state))
+  const defaultUserImage = useSelector(state => loadDefaultImage(state))
   const dispatch = useDispatch()
   const postId = match.params.id
 
@@ -17,22 +70,90 @@ const FullPostPage = ({ match }) => {
     dispatch(loadPost(postId))
   }, [postId, dispatch])
 
+  useEffect(() => {
+    return (() => {
+      dispatch(changeIsLoading(true))
+    })
+  }, [])
+
+
   if (!isAuth) {
     return <Redirect to="/login" />
   }
 
-  if (postData.isLoading) {
+  if (isLoading) {
     return <CircularProgress />
   }
 
-  return <Grid container spacing={2}>
-    <Grid item sm={7} xs={12}>
-      <FullPost postData={postData} postId={postId} />
-    </Grid>
-    <Grid item sm={5} xs={12}>
-      <CommentsSection postId={postId} commentsInfo={postData.comments} />
-    </Grid>
-  </Grid>
+  const handleSubmitLike = (postId) => {
+    dispatch(sendLike(postId))
+  }
+
+  const handleDeleteLike = (postId) => {
+    dispatch(deleteLike(postId))
+  }
+
+  /*const showLikeButton = () => {
+    if (postData.likes.includes(userId)) {
+      return returnInitialLikeButton(true, handleDeleteLike)
+    } else {
+      return returnInitialLikeButton(false, handleSubmitLike)
+    }
+  }
+
+  const returnInitialLikeButton = (isLiked, actionFunction) => {
+    return <IconButton aria-label="add to favorites" color={isLiked ? "primary" : "default"} onClick={() => actionFunction(postId, userId)}>
+      <ThumbUpAltIcon />
+      <span>
+        {postData.likes.length}
+      </span>
+    </IconButton>
+  }*/
+
+  return <>
+    <Paper className={classes.fullTweet}>
+      <div className={classes.tweetsHeaderUser}>
+        <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
+        <Typography>
+          <b>John Smith</b>&nbsp;
+        <div>
+            <span className={classes.tweetUserName}>@{postData.author.name}</span>&nbsp;
+          </div>
+        </Typography>
+      </div>
+      <Typography className={classes.fullTweetText} gutterBottom>
+        {postData.body}
+      </Typography>
+      <Typography>
+        <span className={classes.tweetUserName}>
+          {postData.author.name}
+        </span>
+        <span className={classes.tweetUserName}>
+          1ч
+      </span>
+      </Typography>
+      <div className={`${classes.tweetFooter} ${classes.fullTweetFooter}`} >
+        <IconButton>
+          <CommentIcon style={{ fontSize: 25 }} />
+        </IconButton>
+        <IconButton>
+          <RepostIcon style={{ fontSize: 25 }} />
+        </IconButton>
+        <IconButton>
+          <LikeIcon style={{ fontSize: 25 }} />
+        </IconButton>
+        <IconButton>
+          <ShareIcon style={{ fontSize: 25 }} />
+        </IconButton>
+      </div>
+    </Paper>
+    <Divider />
+    <div className={classes.tweetComments}>
+      <div>comment</div>
+      <div>comment</div>
+      <div>comment</div>
+    </div>
+  </>
 }
 
 export default withRouter(FullPostPage)

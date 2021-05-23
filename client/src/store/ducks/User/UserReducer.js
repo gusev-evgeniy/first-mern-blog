@@ -90,6 +90,7 @@ export const uploadPhoto = (photo) => async dispatch => {
   formData.append('photo', photo)
 
   try {
+    console.log(formData)
     dispatch(setFetching(true))
     const response = await instance.put('/profile/photo', formData, {
       headers: {

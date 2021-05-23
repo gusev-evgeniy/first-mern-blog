@@ -1,5 +1,17 @@
-export const postDetail = (state) => {
-  return state.PostDetailReducer
+export const getPostDetail = (state) => {
+  return state.PostDetailReducer.post
+}
+
+export const getPostDetailStatus = (state) => {
+  return state.PostDetailReducer.isLoading
+}
+
+export const getPostsList = (state) => {
+  return state.PostsListReducer.posts
+}
+
+export const getPostsListStatus = (state) => {
+  return state.PostsListReducer.isLoading
 }
 
 export const getUserInfo = (state) => {

@@ -8,11 +8,9 @@ import App from './App'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={createStore(index, composeWithDevTools(applyMiddleware(thunk)))}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={createStore(index, composeWithDevTools(applyMiddleware(thunk)))}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

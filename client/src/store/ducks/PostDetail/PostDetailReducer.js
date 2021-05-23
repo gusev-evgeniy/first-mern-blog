@@ -1,28 +1,30 @@
 import { instance } from 'store/api'
 
-const UPDATE_LIKES = 'UPDATE_LIKES'
-const FETCH_DATA = 'FETCH_DATA'
-const UPDATE_COMMENTS = 'UPDATE_COMMENTS'
-const CHANGE_LOADING = 'CHANGE_LOADING'
+const UPDATE_LIKES = 'postDetail/UPDATE_LIKES'
+const FETCH_DATA = 'postDetail/FETCH_DATA'
+const UPDATE_COMMENTS = 'postDetail/UPDATE_COMMENTS'
+const CHANGE_LOADING = 'postDetail/CHANGE_LOADING'
 
 const initialState = {
-  body: undefined,
-  comments: [],
-  data: undefined,
-  likes: [],
-  snippets: undefined,
-  title: undefined,
-  _id: "",
-  isLoading: false
+  post: {
+    body: undefined,
+    comments: [],
+    data: undefined,
+    likes: [],
+    snippets: undefined,
+    title: undefined,
+    _id: "",
+  },
+  isLoading: true
 }
 
 export const PostDetailReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_DATA: {
-      return action.payload
+      return { ...state, post: action.payload }
     }
     case UPDATE_LIKES: {
-      return { ...state, likes: action.payload }
+      return { ...state, post: { ...state.post, likes: action.payload } }
     }
     case UPDATE_COMMENTS: {
       return { ...state, comments: [...state.comments, action.payload] }
@@ -63,9 +65,8 @@ export const loadPost = (id) => async dispatch => {
   try {
     dispatch(changeIsLoading(true))
     const response = await instance.get(`/post/${id}`)
-    dispatch(changeIsLoading(false))
-
     dispatch(fetchData(response.data))
+    dispatch(changeIsLoading(false))
   } catch (error) {
     dispatch(changeIsLoading(false))
     console.log(error.response.data.message)
