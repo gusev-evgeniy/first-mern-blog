@@ -37,3 +37,11 @@ export const showError = (state) => {
 export const loadDefaultImage = (state) => {
   return state.InitializeReducer.defaultImage
 }
+
+export const loadTopTags = (state) => {
+  return state.TagReducer.topTags
+}
+
+export const getSearchPosts = (state) => {
+  return state.SearchReducer
+}

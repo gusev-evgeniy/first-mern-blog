@@ -1,4 +1,5 @@
 import { instance } from '../../api'
+import { requestTopTags } from '../Tags/TagReducer';
 
 const FETCH_POSTS = 'FETCH_POSTS'
 const CHANGE_STATUS = 'posts/CHANGE_STATUS'
@@ -26,6 +27,7 @@ export const loadPostList = () => async dispatch => {
   try {
     dispatch(changeStatus(true))
     const response = await instance.get('/posts')
+    dispatch(requestTopTags())
     dispatch(changeStatus(false))
     dispatch(fetchPosts(response.data))
   } catch (error) {

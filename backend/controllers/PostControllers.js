@@ -15,6 +15,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
         select: ['name', 'photo']
       }
     })
+
     res.json(posts)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
@@ -37,6 +38,7 @@ const getPost = asyncHandler(async (req, res) => {
 
 const getPostsByTag = asyncHandler(async (req, res) => {
   try {
+    console.log(req.query.tag)
     const posts = await Post.find({ tags: req.query.tag })
       .populate('author', ['name', 'photo'])
       .populate({
@@ -50,18 +52,12 @@ const getPostsByTag = asyncHandler(async (req, res) => {
 })
 
 const createNewPost = asyncHandler(async (req, res) => {
-  let { body, tags, replyPostId } = req.body
+  let { body, replyPostId } = req.body
+  const tags = body.split(' ').filter(word => word.startsWith('#') && word.length > 1).map(word => word.substring(1))
 
   try {
     const post = await Post.create({ body, tags, author: req.user.id, reply: replyPostId })
     await post.save()
-
-    const topTags = await new Tag({ topTags: { 'hello': 14 } })
-    await topTags.save()
-
-    tags = tags.split(' ').forEach(tag => {
-
-    })
 
     res.json(post)
   } catch (error) {

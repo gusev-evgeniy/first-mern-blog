@@ -15,7 +15,7 @@ const { getPost,
 const router = express.Router()
 
 router.get('/posts', getAllPosts)
-router.get('/posts/search', getPostsByTag)
+router.get('/posts/Search', getPostsByTag)
 router.post('/post', [
   check('body', 'Body not should be empty').notEmpty(),
   authMiddleware

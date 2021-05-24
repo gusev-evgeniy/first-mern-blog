@@ -1,9 +1,13 @@
 import React from 'react'
+import {withRouter} from 'react-router-dom';
 
-export const SearchSection = () => {
+ const SearchSection = ({match}) => {
+   const tag = match.params.tag
   return (
     <div>
-      Search
+      {tag}
     </div>
   )
 }
+
+export default withRouter(SearchSection)
