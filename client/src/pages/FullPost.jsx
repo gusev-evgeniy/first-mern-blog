@@ -7,6 +7,8 @@ import { getPostDetail, getPostDetailStatus, getUserInfo, isAuthInfo, loadDefaul
 import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import RepostIcon from '@material-ui/icons/RepeatOutlined';
 import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import { ReplyTweet } from 'components/ReplyTweet'
+import { PostCard } from 'components/PostCard'
 
 const useStyles = makeStyles((theme) => ({
   tweetUserName: {
@@ -53,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 800,
     overflowY: 'scroll'
   },
+  comment: {
+    border: '1px solid rgb(245, 248, 250)'
+  },
   postImage: {
     marginTop: 15,
     width: '100%',
@@ -67,6 +72,7 @@ const FullPost = ({ match }) => {
   const postData = useSelector(state => getPostDetail(state))
   const isLoading = useSelector(state => getPostDetailStatus(state))
   const isAuth = useSelector(state => isAuthInfo(state))
+  const { _id } = useSelector(state => getUserInfo(state))
   const defaultUserImage = useSelector(state => loadDefaultImage(state))
   const dispatch = useDispatch()
   const postId = match.params.id
@@ -115,8 +121,8 @@ const FullPost = ({ match }) => {
     </IconButton>
   }*/
 
-  return <>
-    <Paper className={classes.fullTweet}>
+  return <Paper>
+    <div className={classes.fullTweet}>
       <div className={classes.tweetsHeaderUser}>
         <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
         <Typography>
@@ -136,24 +142,23 @@ const FullPost = ({ match }) => {
         </span>
       </Typography>
       <div className={`${classes.tweetFooter} ${classes.fullTweetFooter}`} >
-        <IconButton>
-          <CommentIcon style={{ fontSize: 25 }} />
+        <IconButton color='primary'>
+          <LikeIcon style={{ fontSize: 20 }} />
         </IconButton>
-        <IconButton>
-          <RepostIcon style={{ fontSize: 25 }} />
+        <IconButton color='primary'>
+          <RepostIcon style={{ fontSize: 20 }} />
         </IconButton>
-        <IconButton>
-          <LikeIcon style={{ fontSize: 25 }} />
+        <IconButton color='primary'>
+          <CommentIcon style={{ fontSize: 20 }} />
         </IconButton>
       </div>
-    </Paper>
-    <Divider />
-    <div className={classes.tweetComments}>
-      <div>comment</div>
-      <div>comment</div>
-      <div>comment</div>
     </div>
-  </>
+    <div className={classes.tweetComments}>
+      {postData.comments.map(item => <div className={classes.comment} key={item._id} >
+        <ReplyTweet data={item} defaultUserImage={defaultUserImage} />
+      </div>)}
+    </div>
+  </Paper>
 }
 
 export default withRouter(FullPost)

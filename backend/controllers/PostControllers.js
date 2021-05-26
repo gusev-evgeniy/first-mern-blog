@@ -65,16 +65,6 @@ const createNewPost = asyncHandler(async (req, res) => {
   }
 })
 
-const addTags = async (tags) => {
-  const tagsArray = tags.split(' ')
-  try {
-    tagsArray.forEach(tag => {
-      const existTag = Tag.find()
-    });
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 const createNewPhotoPost = asyncHandler(async (req, res) => {
   const file = req.file
@@ -100,12 +90,11 @@ const createNewPhotoPost = asyncHandler(async (req, res) => {
   res.json(post)
 })
 
-
 const deletePost = asyncHandler(async (req, res) => {
   try {
     await Post.findByIdAndDelete(req.params.id)
     await Comment.deleteMany({ post: req.params.id })
-    res.json({ message: 'FullPost delete' })
+    res.json({ message: 'Post delete' })
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }

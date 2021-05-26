@@ -38,8 +38,8 @@ export const NewPostForm = () => {
 
   const { register, handleSubmit, control, formState: { errors, isDirty } } = useForm()
 
-  const handelSubmit = ({ body, tags, image }) => {
-    dispatch(addNewPost({ body, tags, image: image[0] }))
+  const handelSubmit = ({ body, image }) => {
+    dispatch(addNewPost({ body, image: image[0] }))
 
     // history.push('/main')
   }
@@ -74,7 +74,6 @@ export const NewPostForm = () => {
 
   return <form className={classes.form} onSubmit={handleSubmit(handelSubmit, handleError)} >
     {showInputForm({ name: 'body', rules: registerOptions.body, type: 'text', isMultiline: true })}
-    {showInputForm({ name: 'tags', type: 'text' })}
     <input ref={register} type='file' name='image' />
     <div className={classes.buttonWrapper}>
       <Button className={classes.button} type='submit' variant='contained' color='primary' disabled={!isDirty}>

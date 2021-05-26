@@ -73,11 +73,11 @@ export const loadPost = (id) => async dispatch => {
   }
 }
 
-export const sendComment = ({ postId, newComment }) => async dispatch => {
+export const sendComment = ({ body, replyPostId }) => async dispatch => {
   try {
-    await instance.post(`/post/${postId}/comment`, { body: newComment }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+    await instance.post(`/post/${replyPostId}/comment`, { body }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
 
-    dispatch(loadPost(postId))
+    // dispatch(loadPost(postId))
   } catch (error) {
     console.log(error.response.dara.message)
   }

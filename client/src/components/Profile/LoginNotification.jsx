@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto'
   },
   button: {
-    margin: '20px 10px 0 10px'
+    margin: '20px 10px 0 10px',
   }
 }))
 

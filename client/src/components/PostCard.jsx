@@ -13,6 +13,10 @@ import { ModalBlock } from '../components/ModalBlock'
 import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import { ReplyForm } from './ReplyForm'
+import { DeleteNotification } from './DeleteNotification'
+import { addNewPost } from 'store/ducks/PostsList/PostsListReducer'
+import { sendComment } from 'store/ducks/PostDetail/PostDetailReducer'
+import { ReplyTweet } from './ReplyTweet'
 
 const useStyles = makeStyles((theme) => ({
   tweet: {
@@ -47,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
   tweetFooter: {
     display: 'flex',
     position: 'relative',
-    left: -13,
-    justifyContent: 'start',
-    maxWidth: 450,
+    justifyContent: 'space-between',
   },
   tweetIcon: {
     marginRight: 50,
@@ -73,8 +75,8 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   imageWrapper: {
-    maxWidth: 505,
-    height: 285,
+    width: '90%',
+    maxHeight: 285,
     overflow: 'hidden',
     marginTop: 15,
     borderRadius: 15
@@ -85,43 +87,41 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'cover'
   },
   replyWrapper: {
-    border: '1px solid #818181',
-    borderRadius: 15
+    position: 'relative',
+    border: '1px solid #C4CFD6',
+    borderRadius: 15,
   },
-}))
-
-export const PostCard = ({ postData, handleDeletePost, userId }) => {
-  const classes = useStyles()
-  const defaultUserImage = useSelector(state => loadDefaultImage(state))
-  const [visibleReplyOnTweet, setVisibleReplyOnTweet] = React.useState(false);
-
-  const handleClickOpenReplyOnTweet = () => {
-    setVisibleReplyOnTweet(true);
-  };
-
-  const onCloseReplyOnTweet = () => {
-    setVisibleReplyOnTweet(false);
-  };
-
-  const showDeleteButton = () => {
-    if (postData.author._id === userId) {
-      return <IconButton title="Delete Scream" className={classes.deleteButton} onClick={() => { handleDeletePost(postData._id) }}>
-        <DeleteOutline color="secondary" />
-      </IconButton>
+  peranja: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
+    borderRadius: 15,
+    '&:hover': {
+      backgroundColor: 'rgba(235, 238, 240, 0.3)'
     }
   }
+}))
 
-  const str = `hello world #jjlkj`
+export const PostCard = ({ postData, userId }) => {
+  const classes = useStyles()
+  const defaultUserImage = useSelector(state => loadDefaultImage(state))
+  const [visibleModalWindow, setVisibleModalWindow] = React.useState('');
 
-  const changeColor = (value) => {
-    return (
-      <span>
-        <span style={{ color: "red" }}>{value}</span>
-      </span>
-    )
-  }
+  const handleClickOpenWindow = (modalName) => {
+    setVisibleModalWindow(modalName);
+  };
 
-  return <Link to={`/main/post/${postData._id}`}>
+  const onCloseWindow = () => {
+    setVisibleModalWindow(null)
+  };
+
+  const onLink = (e) => {
+    e.preventDefault()
+    console.log('prevent')
+  };
+
+  return <>
     <Paper className={`${classes.tweet} ${classes.tweetHeader}`} variant="outlined">
       <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
       <div className={classes.tweetContent}>
@@ -132,45 +132,61 @@ export const PostCard = ({ postData, handleDeletePost, userId }) => {
               <span className={classes.tweetDate}>1ч назад</span>
           </div>
         </div>
-        <Typography variant="body1" gutterBottom>
-          {postData.body.split(' ').map(part =>
-            part.startsWith('#') && part.length > 1 ? <Link className={classes.tagLink} to='/sdfsd'>{part + " "}</Link> : part + " "
-          )}
-          {postData.image && <div className={classes.imageWrapper}>
-            <img className={classes.tweetImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in twet" />
-          </div>}
-          {postData.reply && <div className={classes.replyWrapper}>
-            <p>{postData.reply.author.name}</p>
-            <Avatar src={postData.reply.author.photo ? `data:${postData.reply.author.contentType};base64, ${postData.reply.author.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
-            <div>
-              {postData.reply.body}
-            </div>
-          </div>}
-        </Typography>
+        <Link to={`/main/post/${postData._id}`} >
+          <Typography variant="body1" gutterBottom>
+            {postData.body.split(' ').map(part =>
+              part.startsWith('#') && part.length > 1 ? <Link className={classes.tagLink} to='/sdfsd'>{part + " "}</Link> : part + " "
+            )}
+            {postData.image && <div className={classes.imageWrapper}>
+              <img className={classes.tweetImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in twet" />
+            </div>}
+            {postData.reply && <Link to={`/main/post/${postData._id}`}>
+              <div className={classes.replyWrapper}>
+                <Link to={`/main/post/${postData._id}`} className={classes.peranja} ></Link>
+                <ReplyTweet data={postData.reply} defaultUserImage={defaultUserImage} />
+              </div>
+            </Link>}
+          </Typography>
+        </Link>
         <div className={classes.tweetFooter}>
           <div className={classes.tweetIcon} >
-            <IconButton color='secondary' >
+            <IconButton color='primary' >
               <LikeIcon style={{ fontSize: 20 }} />
               <span className={classes.likesCount}>{postData.likes.length}</span>
             </IconButton>
           </div>
           <div className={classes.tweetIcon}>
-            <IconButton color='primary' onClick={handleClickOpenReplyOnTweet}>
+            <IconButton color='primary' onClick={() => handleClickOpenWindow('RepostBlock')}>
               <RepostIcon style={{ fontSize: 20 }} />
             </IconButton>
-            <ModalBlock onClose={onCloseReplyOnTweet} visible={visibleReplyOnTweet}>
-              <div style={{ maxWidth: 550 }}>
-                <ReplyForm replyPostId={postData._id} />
-              </div>
-            </ModalBlock>
           </div>
-          <div className={classes.tweetIcon}>
+          <div className={classes.tweetIcon} onClick={() => handleClickOpenWindow('CommentBlock')}>
             <IconButton color='primary'>
               <CommentIcon style={{ fontSize: 20 }} />
             </IconButton>
           </div>
+          {postData.author._id === userId && <div className={classes.tweetIcon} onClick={() => handleClickOpenWindow('DeleteBlock')}>
+            <IconButton color='secondary' >
+              <DeleteOutline color="secondary" />
+            </IconButton>
+          </div>}
         </div>
       </div>
     </Paper>
-  </Link>
+    <ModalBlock onClose={onCloseWindow} visible={visibleModalWindow === 'RepostBlock'}>
+      <div style={{ maxWidth: 550 }}>
+        <ReplyForm func={addNewPost} replyPostId={postData._id} />
+      </div>
+    </ModalBlock>
+    <ModalBlock onClose={onCloseWindow} visible={visibleModalWindow === 'CommentBlock'}>
+      <div style={{ maxWidth: 550 }}>
+        <ReplyForm func={sendComment} replyPostId={postData._id} />
+      </div>
+    </ModalBlock>
+    <ModalBlock onClose={onCloseWindow} visible={visibleModalWindow === 'DeleteBlock'}>
+      <div style={{ maxWidth: 280 }}>
+        <DeleteNotification postId={postData._id} onClose={onCloseWindow} />
+      </div>
+    </ModalBlock>
+  </>
 }

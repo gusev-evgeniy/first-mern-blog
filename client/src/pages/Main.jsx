@@ -1,6 +1,6 @@
 import { Button, Grid, Hidden, makeStyles } from '@material-ui/core'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { isAuthInfo } from 'store/selectors/Selectors'
 import { LoginNotification } from '../components/Profile/LoginNotification'
 import { Profile } from '../components/Profile/Profile'
@@ -12,7 +12,8 @@ import CreateIcon from '@material-ui/icons/Create';
 import { ModalBlock } from 'components/ModalBlock'
 import { NewPostForm } from 'components/NewPostForm'
 import SearchSection from './SearchSection'
-import { SearchField } from 'components/RightSide'
+import { requestTopTags } from 'store/ducks/Tags/TagReducer'
+import { useEffect } from 'react'
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -33,8 +34,12 @@ const useStyles = makeStyles((theme) => ({
 export const Main = () => {
   const classes = useStyles()
   const isAuth = useSelector(state => isAuthInfo(state))
-
+  const dispatch = useDispatch()
   const [visibleAddTweet, setSetVisibleAddTweet] = React.useState(false);
+
+  useEffect(() => {
+    dispatch(requestTopTags())
+  }, [dispatch])
 
   const handleClickOpenAddTweet = () => {
     setSetVisibleAddTweet(true);
