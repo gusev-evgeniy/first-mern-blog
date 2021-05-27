@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
-import { Avatar, Paper } from '@material-ui/core'
+import { Avatar, Button, Paper } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import RepostIcon from '@material-ui/icons/RepeatOutlined';
 import DeleteOutline from '@material-ui/icons/DeleteOutline'
@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'column',
     alignItems: 'flex-end',
     padding: '15px 15px 0 15px',
+    borderBottom: '1px solid  #EBEEF0',
     '&:hover': {
       backgroundColor: 'rgb(245, 248, 250)',
     },
@@ -43,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 10
   },
   tweetContent: {
     flex: 1,
@@ -57,11 +57,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 50,
   },
   tweetUserName: {
-    color: '#00bcd4',
     fontWeight: 600,
     fontSize: 19
   },
   tweetDate: {
+    fontSize: 17,
     color: '#818181',
   },
   likesCount: {
@@ -95,10 +95,11 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     width: '100%',
     height: '100%',
+    backgroundColor: 'rgba(78, 78, 78, 0.1)',
     zIndex: 10,
     borderRadius: 15,
     '&:hover': {
-      backgroundColor: 'rgba(235, 238, 240, 0.3)'
+      backgroundColor: 'rgba(63, 63, 63, 0.2)'
     }
   }
 }))
@@ -117,22 +118,29 @@ export const PostCard = ({ postData, userId }) => {
   };
 
   const onLink = (e) => {
-    e.preventDefault()
+    e.stopPropagation()
     console.log('prevent')
   };
 
+  const onLinkHead = (e) => {
+    console.log('onLinkHead1')
+    e.preventDefault()
+    console.log('onLinkHead')
+  };
+
   return <>
-    <Paper className={`${classes.tweet} ${classes.tweetHeader}`} variant="outlined">
-      <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
+    <div className={`${classes.tweet} ${classes.tweetHeader}`} variant="outlined">
+      {<Avatar src={postData.author && postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />}
       <div className={classes.tweetContent}>
         <div className={classes.tweetHeader}>
           <div>
             <span className={classes.tweetUserName}>{postData.author.name}</span>&nbsp;
+            <span className={classes.tweetDate}>@{postData.author.name}</span>&nbsp;
               <span className={classes.tweetDate}>·</span>&nbsp;
               <span className={classes.tweetDate}>1ч назад</span>
           </div>
         </div>
-        <Link to={`/main/post/${postData._id}`} >
+        <Link onClick={(e) => onLinkHead(e)} >
           <Typography variant="body1" gutterBottom>
             {postData.body.split(' ').map(part =>
               part.startsWith('#') && part.length > 1 ? <Link className={classes.tagLink} to='/sdfsd'>{part + " "}</Link> : part + " "
@@ -140,12 +148,14 @@ export const PostCard = ({ postData, userId }) => {
             {postData.image && <div className={classes.imageWrapper}>
               <img className={classes.tweetImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in twet" />
             </div>}
-            {postData.reply && <Link to={`/main/post/${postData._id}`}>
-              <div className={classes.replyWrapper}>
-                <Link to={`/main/post/${postData._id}`} className={classes.peranja} ></Link>
-                <ReplyTweet data={postData.reply} defaultUserImage={defaultUserImage} />
-              </div>
-            </Link>}
+            {postData.reply && <Button component="label" onClick={(e) => onLink(e)}>
+              <Link to={`/main/post/${postData._id}`}>
+                <div className={classes.replyWrapper}>
+                  <Link to={`/main/post/${postData._id}`} className={classes.peranja} ></Link>
+                  <ReplyTweet data={postData.reply} defaultUserImage={defaultUserImage} />
+                </div>
+              </Link>
+            </Button>}
           </Typography>
         </Link>
         <div className={classes.tweetFooter}>
@@ -172,7 +182,7 @@ export const PostCard = ({ postData, userId }) => {
           </div>}
         </div>
       </div>
-    </Paper>
+    </div>
     <ModalBlock onClose={onCloseWindow} visible={visibleModalWindow === 'RepostBlock'}>
       <div style={{ maxWidth: 550 }}>
         <ReplyForm func={addNewPost} replyPostId={postData._id} />

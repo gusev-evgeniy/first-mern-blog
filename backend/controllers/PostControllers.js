@@ -8,7 +8,7 @@ const Tag = require('../models/TagModel')
 
 const getAllPosts = asyncHandler(async (req, res) => {
   try {
-    let posts = await Post.find().populate('author', ['name', 'photo']).populate({
+    let posts = await Post.find().sort([['created', '-1']]).populate('author', ['name', 'photo']).populate({
       path: 'reply',
       populate: {
         path: 'author',
@@ -38,13 +38,13 @@ const getPost = asyncHandler(async (req, res) => {
 
 const getPostsByTag = asyncHandler(async (req, res) => {
   try {
-    console.log(req.query.tag)
-    const posts = await Post.find({ tags: req.query.tag })
-      .populate('author', ['name', 'photo'])
-      .populate({
-        path: 'comments',
-        populate: { path: 'author', select: ['name', 'photo'] }
-      })
+    let posts = await Post.find({ tags: req.query.tag }).sort([['created', '-1']]).populate('author', ['name', 'photo']).populate({
+      path: 'reply',
+      populate: {
+        path: 'author',
+        select: ['name', 'photo']
+      }
+    })
     res.json(posts)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })

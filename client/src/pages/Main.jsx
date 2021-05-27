@@ -11,7 +11,7 @@ import FullPostPage from './FullPost'
 import CreateIcon from '@material-ui/icons/Create';
 import { ModalBlock } from 'components/ModalBlock'
 import { NewPostForm } from 'components/NewPostForm'
-import SearchSection from './SearchSection'
+import { SearchSection } from './SearchSection'
 import { requestTopTags } from 'store/ducks/Tags/TagReducer'
 import { useEffect } from 'react'
 
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
     display: 'flex',
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   TweetButton: {
     display: 'flex',
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.7),
     marginTop: theme.spacing(2),
     borderRadius: 9999
+  },
+  middleWrapper: {
+    border: '1px solid  #EBEEF0',
   }
 }))
 
@@ -49,7 +52,7 @@ export const Main = () => {
     setSetVisibleAddTweet(false);
   };
 
-  return <Grid container spacing={2}>
+  return <Grid container>
     <Grid item md={3} sm={4} xs={12}>
       {isAuth
         ? (
@@ -77,14 +80,14 @@ export const Main = () => {
         )
         : <LoginNotification />}
     </Grid>
-    <Grid item md={6} sm={8} xs={12}>
+    <Grid item md={6} sm={8} xs={12} className={classes.middleWrapper}>
       <Route exact path='/main'>
         <PostList />
       </Route>
       <Route path='/main/post/:id'>
         <FullPostPage />
       </Route>
-      <Route path='/search/:tag'>
+      <Route path='/main/search'>
         <SearchSection />
       </Route>
     </Grid>

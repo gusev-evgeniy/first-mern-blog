@@ -50,7 +50,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <div className='App'>
-          <Navbar />
           <Container className='container'>
             <Route path='/main'>
               <Main />

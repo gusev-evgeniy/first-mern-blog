@@ -1,7 +1,7 @@
 import { Divider, List, ListItem, ListItemText, makeStyles, Paper, Typography } from '@material-ui/core'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import { getSearchPosts, loadTopTags } from 'store/selectors/Selectors'
 import { SearchField } from './SearchField'
 import { requestSearchPosts } from '../store/ducks/Search/SearchReducer';
@@ -55,10 +55,18 @@ const useStyles = makeStyles((theme) => ({
 export const RightSide = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const history = useHistory()
   const topTagsList = useSelector(state => loadTopTags(state))
   const searchPostsData = useSelector(state => getSearchPosts(state))
 
   const handelClick = (tag) => {
+    history.push({
+      pathname: '/main/search',
+      search: `?q=${tag}`,
+      state: {
+        quary: tag,
+      },
+    });
     dispatch(requestSearchPosts(tag))
 
   }

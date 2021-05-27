@@ -96,7 +96,7 @@ export const Profile = () => {
     <div className={classes.profile}>
       <div className="image-wrapper">
         <img src={user.photo ? `data:${user.photo.contentType};base64, ${user.photo.imageBase64}` : defaultUserImage} className="profile-image" alt="profile" />
-        <input type="file" hidden='hidden' id="imageInput" onChange={handleImageChange} />
+        <input type="file" hidden='hidden' id="imageInput" onChange={handleImageChange} name='image' />
         <Fab color="primary" aria-label="add" size='small' className={classes.button} onClick={handleEditPicture}>
           <EditIcon />
         </Fab>

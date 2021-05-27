@@ -13,6 +13,7 @@ const initialState = {
 export const PostsListReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_POSTS:
+      debugger
       return { ...state, posts: action.payload }
     case CHANGE_STATUS:
       return { ...state, isLoading: action.payload }
