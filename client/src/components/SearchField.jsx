@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 30,
       backgroundColor: '#f7f9fa',
       padding: 0,
+      marginTop: 2,
       paddingLeft: 15,
       '&.Mui-focused': {
         backgroundColor: 'rgb(237, 243, 246)',
@@ -36,7 +37,7 @@ export const SearchField = () => {
   return (
     <>
       <TextField variant="outlined"
-        placeholder="Поиск по Твиттеру"
+        placeholder="Search by tag"
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

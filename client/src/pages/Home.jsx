@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 import { PostCard } from '../components/PostCard';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,28 +8,26 @@ import { deletePost, loadPostList, fetchPosts } from 'store/ducks/PostsList/Post
 import { SubmitForm } from 'components/SubmitForm';
 
 const useStyles = makeStyles((theme) => ({
-  postListWrapper: {
-    position: 'relative',
-    width: '100%'
+  formWrapper: {
+    marginTop: 10,
+    padding: '0 16px',
+    borderBottom: '1px solid  #EBEEF0',
   },
   title: {
-    position: 'fixed',
+    display: 'flex',
+    alignItems: 'center',
+    flex: 1,
+    top: 0,
     padding: 16,
-    left: 0,
     fontSize: 22,
     fontWeight: 800,
     borderBottom: '1px solid  #EBEEF0',
     zIndex: 100,
     backgroundColor: '#fff'
   },
-  formWrapper: {
-    marginTop: 72,
-    padding: '0 16px',
-    borderBottom: '1px solid  #EBEEF0',
-  }
 }))
 
-export const PostList = () => {
+export const Home = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
@@ -55,7 +53,7 @@ export const PostList = () => {
     return <CircularProgress />
   }
 
-  return <div className={classes.postListWrapper}>
+  return <>
     <div className={classes.title}>
       Home
     </div>
@@ -63,7 +61,7 @@ export const PostList = () => {
       <SubmitForm />
     </div>
     {posts.map(post => {
-      return <PostCard key={post._id} postData={post} handleDeletePost={handleDeletePost} userId={_id} />
+      return <PostCard key={post._id} postData={post} userId={_id} />
     })}
-  </div>
+  </>
 }

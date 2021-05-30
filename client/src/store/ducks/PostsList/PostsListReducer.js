@@ -4,6 +4,7 @@ import { requestTopTags } from '../Tags/TagReducer';
 const FETCH_POSTS = 'FETCH_POSTS'
 const CHANGE_STATUS = 'posts/CHANGE_STATUS'
 const DELETE_POST = 'posts/DELETE_POST'
+const UNSHIFT_NEW_TWEET = 'posts/UNSHIFT_NEW_TWEET'
 
 const initialState = {
   isLoading: true,
@@ -13,12 +14,13 @@ const initialState = {
 export const PostsListReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_POSTS:
-      debugger
       return { ...state, posts: action.payload }
     case CHANGE_STATUS:
       return { ...state, isLoading: action.payload }
     case DELETE_POST:
       return { ...state, posts: state.posts.filter(post => post._id !== action.payload) }
+    case UNSHIFT_NEW_TWEET:
+      return { ...state, posts: [action.payload, ...state.posts] }
     default:
       return state
   }
@@ -27,6 +29,7 @@ export const PostsListReducer = (state = initialState, action) => {
 export const fetchPosts = posts => ({ type: FETCH_POSTS, payload: posts })
 export const changeStatus = status => ({ type: CHANGE_STATUS, payload: status })
 export const deleteAction = postId => ({ type: DELETE_POST, payload: postId })
+export const unshiftNewTweetAction = (tweet) => ({ type: UNSHIFT_NEW_TWEET, payload: tweet })
 
 export const loadPostList = () => async dispatch => {
   try {

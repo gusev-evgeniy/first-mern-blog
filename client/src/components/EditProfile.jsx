@@ -1,10 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, makeStyles, TextField } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, makeStyles, TextField } from '@material-ui/core'
 import React from 'react'
-import MyButton from '../../utils/MyButton'
 import EditIcon from '@material-ui/icons/Edit'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { updateUser } from 'store/ducks/User/UserReducer'
+import { useState } from 'react'
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 export const EditProfile = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { handleSubmit, control } = useForm()
 
   const handleClickOpen = () => {
@@ -33,12 +33,11 @@ export const EditProfile = () => {
 
 
   return <>
-    <MyButton
-      tip="Edit Details"
+    <Button
       onClick={handleClickOpen}
     >
-      <EditIcon color="primary" />
-    </MyButton>
+      Set
+    </Button>
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth
       maxWidth="sm">
       <DialogTitle id="form-dialog-title">Edit your details</DialogTitle>

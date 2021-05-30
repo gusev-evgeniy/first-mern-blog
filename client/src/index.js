@@ -6,10 +6,13 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import App from './App'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.render(
   <Provider store={createStore(index, composeWithDevTools(applyMiddleware(thunk)))}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

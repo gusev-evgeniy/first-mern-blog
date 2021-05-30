@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
-import { Avatar, Paper } from '@material-ui/core'
+import { Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   tweet: {
@@ -13,13 +13,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
     padding: '15px 13px',
     zIndex: 1,
+    fontSize: 15,
     '&:hover': {
-      backgroundColor: 'rgb(245, 248, 250)',
+      backgroundColor: 'rgb(235, 238, 240)',
     },
   },
   tweetAvatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
     marginRight: 15,
   },
   tweetHeader: {
@@ -35,13 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tweetUserName: {
     fontWeight: 600,
-    fontSize: 18
   },
   tweetDate: {
-    color: '#818181',
+    color: '#5b7083',
   },
   likesCount: {
-    fontSize: 16,
     marginLeft: 5
   },
   tagLink: {

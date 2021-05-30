@@ -20,23 +20,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53e04fab-5b55-433e-8e47-21e4d92a5492" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/controllers/TagControllers.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/SearchRouter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/routes/TagRouter.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/store/ducks/Search/SearchReducer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/store/ducks/Tags/TagReducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/store/ducks/Profile/ProfileReducer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/PostControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/PostControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/PostRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/PostRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PopularTags.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/UserModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/UserModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/UserRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/UserRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NewPostForm.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/PostCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PostCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ReplyTweet.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ReplyTweet.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/RightSide.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/RightSide.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SearchField.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SearchField.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SideMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SideMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SubmitForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SubmitForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/FullPost.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/FullPost.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SearchSection.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/PostList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/SearchSection.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/AddPost/AddPostReducer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/Initialize/InitializeReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/Initialize/InitializeReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/store/ducks/PostsList/PostsListReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/PostsList/PostsListReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/ducks/User/UserReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/ducks/User/UserReducer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/store/selectors/Selectors.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/selectors/Selectors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/utils/MyButton.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +96,7 @@
       <workItem from="1621794460559" duration="45000" />
       <workItem from="1621889122880" duration="1780000" />
       <workItem from="1621891712691" duration="1790000" />
+      <workItem from="1622313701700" duration="1411000" />
     </task>
     <servers />
   </component>

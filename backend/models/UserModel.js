@@ -29,6 +29,12 @@ const UserSchema = new Schema({
   },
   location: {
     type: String
+  },
+  tweets: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+  },
+  bookmarks: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
   }
 })
 

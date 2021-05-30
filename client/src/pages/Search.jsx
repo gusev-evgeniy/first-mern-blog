@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { getSearchPosts, getUserInfo } from 'store/selectors/Selectors';
 
-export const SearchSection = (props) => {
+export const Search = (props) => {
   const location = useLocation()
   const { postsList } = useSelector(state => getSearchPosts(state))
   debugger

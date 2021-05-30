@@ -21,7 +21,6 @@ const initialState = {
 export const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
-
       return { user: { ...action.payload }, isAuth: true, errors: {} }
     case LOGOUT:
       localStorage.removeItem('token')

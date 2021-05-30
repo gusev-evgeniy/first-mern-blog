@@ -4,6 +4,12 @@ const INITIALIZE = 'INITIALIZE'
 
 const initialState = {
   isInitialized: false,
+  isAuth: false,
+  user: {
+    userName: null,
+    id: null,
+    email: null
+  },
   defaultImage: 'https://manskkp.lv/assets/images/users/default-user.png'
 }
 

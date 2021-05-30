@@ -15,15 +15,15 @@ export const getPostsListStatus = (state) => {
 }
 
 export const getUserInfo = (state) => {
-  return state.AuthReducer.user
+  return state.UserReducer.user
 }
 
 export const isAuthInfo = (state) => {
-  return state.AuthReducer.isAuth
+  return state.UserReducer.isAuth
 }
 
 export const isFetchingInfo = (state) => {
-  return state.AuthReducer.isFetching
+  return state.UserReducer.isFetching
 }
 
 export const isInitializedInfo = (state) => {
@@ -31,7 +31,7 @@ export const isInitializedInfo = (state) => {
 }
 
 export const showError = (state) => {
-  return state.AuthReducer.errors
+  return state.UserReducer.errors
 }
 
 export const loadDefaultImage = (state) => {
@@ -44,4 +44,8 @@ export const loadTopTags = (state) => {
 
 export const getSearchPosts = (state) => {
   return state.SearchReducer
+}
+
+export const getProfileInfo = (state) => {
+  return state.ProfileReducer
 }

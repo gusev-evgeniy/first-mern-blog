@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require('uuid')
 
 const Post = require('../models/PostModel')
 const Comment = require('../models/CommentModel')
-const Tag = require('../models/TagModel')
 
 const getAllPosts = asyncHandler(async (req, res) => {
   try {
@@ -53,18 +52,18 @@ const getPostsByTag = asyncHandler(async (req, res) => {
 
 const createNewPost = asyncHandler(async (req, res) => {
   let { body, replyPostId } = req.body
-  const tags = body.split(' ').filter(word => word.startsWith('#') && word.length > 1).map(word => word.substring(1))
+  console.log(body.split(' '))
+  const tags = body.replace('\n', ' ').split(' ').filter(word => word.startsWith('#') && word.length > 1).map(word => word.substring(1))
 
   try {
     const post = await Post.create({ body, tags, author: req.user.id, reply: replyPostId })
     await post.save()
 
-    res.json(post)
+    res.json(post.populate('author', ['name', 'photo']))
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }
 })
-
 
 const createNewPhotoPost = asyncHandler(async (req, res) => {
   const file = req.file
@@ -87,7 +86,7 @@ const createNewPhotoPost = asyncHandler(async (req, res) => {
   post.image = finalImg
   await post.save()
 
-  res.json(post)
+  res.json(post.populate('author', ['name', 'photo']))
 })
 
 const deletePost = asyncHandler(async (req, res) => {

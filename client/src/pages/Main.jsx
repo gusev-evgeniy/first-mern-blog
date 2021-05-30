@@ -1,19 +1,16 @@
-import { Button, Grid, Hidden, makeStyles } from '@material-ui/core'
+import { Grid, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isAuthInfo } from 'store/selectors/Selectors'
-import { LoginNotification } from '../components/Profile/LoginNotification'
-import { Profile } from '../components/Profile/Profile'
 import { RightSide } from 'components/RightSide'
-import { PostList } from './PostList';
+import { Home } from './Home';
 import { Route } from 'react-router-dom';
 import FullPostPage from './FullPost'
-import CreateIcon from '@material-ui/icons/Create';
-import { ModalBlock } from 'components/ModalBlock'
-import { NewPostForm } from 'components/NewPostForm'
-import { SearchSection } from './SearchSection'
+import { Search } from './Search'
 import { requestTopTags } from 'store/ducks/Tags/TagReducer'
 import { useEffect } from 'react'
+import { SideMenu } from 'components/SideMenu'
+import { Profile } from './Profile'
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -30,69 +27,40 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 9999
   },
   middleWrapper: {
+    position: 'relative',
+    minHeight: '100vh',
     border: '1px solid  #EBEEF0',
   }
 }))
 
 export const Main = () => {
   const classes = useStyles()
-  const isAuth = useSelector(state => isAuthInfo(state))
   const dispatch = useDispatch()
-  const [visibleAddTweet, setSetVisibleAddTweet] = React.useState(false);
 
   useEffect(() => {
     dispatch(requestTopTags())
   }, [dispatch])
 
-  const handleClickOpenAddTweet = () => {
-    setSetVisibleAddTweet(true);
-  };
-
-  const onCloseAddTweet = () => {
-    setSetVisibleAddTweet(false);
-  };
-
   return <Grid container>
-    <Grid item md={3} sm={4} xs={12}>
-      {isAuth
-        ? (
-          <>
-            <Profile />
-            <div className={classes.buttonWrapper}>
-              <Button
-                onClick={handleClickOpenAddTweet}
-                className={classes.TweetButton}
-                variant="contained"
-                color="primary"
-                fullWidth>
-                <Hidden smDown>Tweet</Hidden>
-                <Hidden mdUp>
-                  <CreateIcon />
-                </Hidden>
-              </Button>
-              <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet}>
-                <div style={{ width: 550 }}>
-                  <NewPostForm />
-                </div>
-              </ModalBlock>
-            </div>
-          </>
-        )
-        : <LoginNotification />}
+    <Grid item md={3} sm={1} xs={12}>
+      <SideMenu />
     </Grid>
-    <Grid item md={6} sm={8} xs={12} className={classes.middleWrapper}>
-      <Route exact path='/main'>
-        <PostList />
+    <Grid item md={6} sm={11} xs={12} className={classes.middleWrapper}>
+      <Route exact path='/home'>
+        <Home />
       </Route>
-      <Route path='/main/post/:id'>
+      <Route path='/home/post/:id'>
         <FullPostPage />
       </Route>
-      <Route path='/main/search'>
-        <SearchSection />
+      <Route path='/home/search'>
+        <Search />
+      </Route>
+      <Route path='/home/user/:id'>
+        <Profile />
       </Route>
     </Grid>
     <Grid item md={3} sm={6} xs={12} >
-      <div className={classes.TagsSection}>
+      <div >
         <RightSide />
       </div>
     </Grid>

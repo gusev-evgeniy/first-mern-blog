@@ -38,6 +38,7 @@ const createUser = asyncHandler(async (req, res) => {
 })
 
 const auth = asyncHandler(async (req, res) => {
+  console.log('auth')
   try {
     const user = await User.findOne({ _id: req.user.id }).populate('posts')
     const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '24h' })
@@ -52,7 +53,7 @@ const auth = asyncHandler(async (req, res) => {
   }
 })
 
-const getUser = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
   try {
@@ -75,6 +76,17 @@ const getUser = asyncHandler(async (req, res) => {
     })
   } catch (error) {
     req.status(400).json({ message: 'Something went wrong' })
+  }
+})
+
+const getUser = asyncHandler(async (req, res) => {
+  try {
+    const user = await User
+      .findById(req.params.id)
+      .populate('post')
+    res.json(user)
+  } catch (error) {
+    req.status(400).json({ message: 'Something goes wrong' })
   }
 })
 
@@ -120,5 +132,5 @@ const uploadPhoto = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  createUser, getUser, auth, uploadPhoto, updateUser
+  createUser, getUser, auth, uploadPhoto, updateUser, login
 }

@@ -6,6 +6,7 @@ import { getUserInfo, loadDefaultImage } from 'store/selectors/Selectors'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import { addNewPost } from 'store/ducks/PostsList/PostsListReducer'
+import { addNewTweet } from 'store/ducks/AddTweet/AddTweetReducer'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -45,12 +46,14 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     fontSize: 20,
     resize: 'none',
-    fontWeight: 600,
+    fontWeight: 400,
+
     fontFamily: 'inherit',
-    color: '#5b7083',
+    color: '#7d8e9e',
     outline: 'none',
     '&::placeholder': {
-      color: '#5b7083',
+      color: '#7d8e9e',
+      fontWeight: 400,
     }
   },
   icon: {
@@ -69,7 +72,7 @@ export const SubmitForm = () => {
   const { handleSubmit, control, register, formState: { isDirty } } = useForm()
 
   const handelSubmit = ({ body, image }) => {
-    dispatch(addNewPost({ body, image: image[0] }))
+    dispatch(addNewTweet({ body, image: image[0] }))
 
     // history.push('/main')
   }
@@ -104,9 +107,15 @@ export const SubmitForm = () => {
       >
         <ImageOutlinedIcon style={{ fontSize: 24 }} />
 
-        <input type="file" hidden='hidden' name='image' ref={register} />
+        <input type="file" hidden name='image' ref={register} />
       </IconButton>
-      <Button className={classes.button} type='submit' variant='contained' color='primary' disabled={!isDirty}>
+      <Button
+        className={classes.button}
+        type='submit'
+        variant='contained'
+        color='primary'
+        disabled={!isDirty}
+      >
         Tweet
       </Button>
     </div>

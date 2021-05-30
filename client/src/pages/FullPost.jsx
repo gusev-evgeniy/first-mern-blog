@@ -77,6 +77,7 @@ const FullPost = ({ match }) => {
   const dispatch = useDispatch()
   const postId = match.params.id
 
+
   useEffect(() => {
     dispatch(loadPost(postId))
   }, [postId, dispatch])
@@ -134,7 +135,7 @@ const FullPost = ({ match }) => {
       </div>
       <Typography className={classes.fullTweetText} gutterBottom>
         {postData.body}
-        {postData.image && <img className={classes.postImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in twet" />}
+        {postData.image && <img className={classes.postImage} src={`data:${postData.image.contentType};base64, ${postData.image.imageBase64}`} alt="img in tweet" />}
       </Typography>
       <Typography>
         <span className={classes.tweetUserName}>

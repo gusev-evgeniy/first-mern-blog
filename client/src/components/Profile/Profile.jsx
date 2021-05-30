@@ -15,7 +15,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 import { getUserInfo, isAuthInfo, loadDefaultImage } from 'store/selectors/Selectors'
 import { useDispatch, useSelector } from 'react-redux'
 import { uploadPhoto, logout } from 'store/ducks/User/UserReducer'
-import { EditProfile } from './EditProfile'
 
 const useStyles = makeStyles((theme) => ({
   profile: {
@@ -123,7 +122,6 @@ export const Profile = () => {
         Log out
         <KeyboardReturn color="primary" />
       </Button>
-      <EditProfile />
     </div>
   </Card >
 }
