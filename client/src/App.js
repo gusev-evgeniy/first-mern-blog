@@ -36,11 +36,10 @@ const theme = createMuiTheme({
 function App() {
   const dispatch = useDispatch()
 
-  const isInitialized = useSelector(state => isInitializedInfo(state))
-
+  const { isInitialized } = useSelector(isInitializedInfo)
   useEffect(() => {
     dispatch(initializeApp())
-  }, [])
+  }, [dispatch])
 
   if (!isInitialized) {
     return <LinearProgress />

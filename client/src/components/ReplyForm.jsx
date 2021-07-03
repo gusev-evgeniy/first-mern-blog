@@ -3,7 +3,6 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
-import { addNewPost } from 'store/ducks/PostsList/PostsListReducer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,18 +29,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const ReplyForm = ({ replyPostId, func }) => {
+export const ReplyForm = ({ replyPostId, func, onCloseWindow }) => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const { handleSubmit, control, formState: { errors, isDirty } } = useForm()
 
   const handelSubmit = ({ body }) => {
-    debugger
     dispatch(func({ body, replyPostId }))
-
-    // history.push('/main')
+    onCloseWindow()
   }
 
   const handleError = (errors) => {

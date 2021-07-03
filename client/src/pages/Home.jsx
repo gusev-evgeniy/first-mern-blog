@@ -1,11 +1,11 @@
 import React from 'react'
 import { CircularProgress, makeStyles } from '@material-ui/core';
-import { PostCard } from '../components/PostCard';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPostsList, getPostsListStatus, getUserInfo } from '../store/selectors/Selectors'
-import { deletePost, loadPostList, fetchPosts } from 'store/ducks/PostsList/PostsListReducer';
+import { getPostsList, getPostsListStatus } from '../store/selectors/Selectors'
+import { loadPostList, fetchPosts, changeStatus, loadPostListBySubscriptions } from 'store/ducks/PostsList/PostsListReducer';
 import { SubmitForm } from 'components/SubmitForm';
+import { PostsList } from 'components/PostsList';
 
 const useStyles = makeStyles((theme) => ({
   formWrapper: {
@@ -25,33 +25,27 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 100,
     backgroundColor: '#fff'
   },
+  divider: {
+    display: 'flex',
+    flex: 1,
+    height: 13,
+    backgroundColor: '#f7f9fa',
+  },
 }))
 
 export const Home = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
-  const posts = useSelector(state => getPostsList(state))
-  const isLoading = useSelector(state => getPostsListStatus(state))
-  const { _id } = useSelector(state => getUserInfo(state))
+  const posts = useSelector(getPostsList)
 
   useEffect(() => {
-    dispatch(loadPostList())
-  }, [loadPostList, dispatch])
-
-  useEffect(() => {
+    dispatch(loadPostListBySubscriptions())
     return () => {
       dispatch(fetchPosts([]))
+      dispatch(changeStatus(true))
     }
-  }, [])
-
-  const handleDeletePost = (id) => {
-    dispatch(deletePost(id))
-  }
-
-  if (isLoading) {
-    return <CircularProgress />
-  }
+  }, [dispatch])
 
   return <>
     <div className={classes.title}>
@@ -60,8 +54,7 @@ export const Home = () => {
     <div className={classes.formWrapper}>
       <SubmitForm />
     </div>
-    {posts.map(post => {
-      return <PostCard key={post._id} postData={post} userId={_id} />
-    })}
+    <div className={classes.divider}></div>
+    <PostsList posts={posts} />
   </>
 }

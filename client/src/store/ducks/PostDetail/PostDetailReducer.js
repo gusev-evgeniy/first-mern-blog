@@ -3,6 +3,8 @@ import { instance } from 'store/api'
 const UPDATE_LIKES = 'postDetail/UPDATE_LIKES'
 const FETCH_DATA = 'postDetail/FETCH_DATA'
 const UPDATE_COMMENTS = 'postDetail/UPDATE_COMMENTS'
+const ADD_BOOKMARK = 'postDetail/ADD_BOOKMARK'
+const DELETE_BOOKMARK = 'postDetail/DELETE_BOOKMARK'
 const CHANGE_LOADING = 'postDetail/CHANGE_LOADING'
 
 const initialState = {
@@ -38,6 +40,8 @@ export const PostDetailReducer = (state = initialState, action) => {
 }
 
 export const updateLikes = (likes) => ({ type: UPDATE_LIKES, payload: likes })
+export const addBookmarkAction = (id) => ({ type: ADD_BOOKMARK, payload: id })
+export const deleteBookmarkAction = (id) => ({ type: DELETE_BOOKMARK, payload: id })
 export const fetchData = (data) => ({ type: FETCH_DATA, payload: data })
 export const changeIsLoading = (boolean) => ({ type: CHANGE_LOADING, payload: boolean })
 
@@ -55,6 +59,26 @@ export const deleteLike = (postId) => async dispatch => {
   try {
     const response = await instance.delete(`/post/${postId}/like`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
 
+    dispatch(updateLikes(response.data.likes))
+  } catch (error) {
+    console.log(error.response.data.message)
+  }
+}
+
+export const sendBookmarkFullPost = (postId) => async dispatch => {
+  try {
+    const response = await instance.put(`/post/${postId}/bookmarks`, {}, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+    debugger
+    dispatch(addBookmarkAction(response.data.bookmarks))
+  } catch (error) {
+    console.log(error.response.data.message)
+  }
+}
+
+export const deleteBookmarkFullPost = (postId) => async dispatch => {
+  try {
+    const response = await instance.delete(`/post/${postId}/bookmarks`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+    debugger
     dispatch(updateLikes(response.data.likes))
   } catch (error) {
     console.log(error.response.data.message)

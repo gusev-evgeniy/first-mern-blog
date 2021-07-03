@@ -29,7 +29,7 @@ const createUser = asyncHandler(async (req, res) => {
     })
     await newUser.save()
 
-    res.json({ message: 'User was created' })
+    res.json({ message: 'Success' })
 
   } catch (e) {
     console.log(e)
@@ -38,7 +38,6 @@ const createUser = asyncHandler(async (req, res) => {
 })
 
 const auth = asyncHandler(async (req, res) => {
-  console.log('auth')
   try {
     const user = await User.findOne({ _id: req.user.id }).populate('posts')
     const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '24h' })
@@ -58,7 +57,6 @@ const login = asyncHandler(async (req, res) => {
 
   try {
     const user = await User.findOne({ email })
-
     if (!user) {
       return res.status(401).json({ message: 'Incorrect Email' })
     }
@@ -69,7 +67,6 @@ const login = asyncHandler(async (req, res) => {
       return res.status(401).json({ message: 'Incorrect Password' })
     }
     const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '24h' })
-
     res.json({
       token,
       user
@@ -90,6 +87,16 @@ const getUser = asyncHandler(async (req, res) => {
   }
 })
 
+const getUsers = asyncHandler(async (req, res) => {
+  try {
+    const users = await User.find().select(['name', 'photo', 'bio', 'subscriptions'])
+
+    res.json(users)
+  } catch (error) {
+    req.status(400).json({ message: 'Something goes wrong' })
+  }
+})
+
 const updateUser = asyncHandler(async (req, res) => {
   const { bio, website, location } = req.body
 
@@ -104,6 +111,31 @@ const updateUser = asyncHandler(async (req, res) => {
     res.json({ user })
   } catch (error) {
     req.status(400).json({ message: 'Something went wrong' })
+  }
+})
+
+const subscribe = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+
+    user.subscriptions.push(req.params.id)
+    await user.save()
+
+    res.json({ message: 'Success' })
+  } catch (error) {
+    req.status(400).json({ message: 'Something goes wrong' })
+  }
+})
+
+const unsubscribe = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id)
+    user.subscriptions.remove(req.params.id)
+    await user.save()
+
+    res.json({ message: 'Success' })
+  } catch (error) {
+    req.status(400).json({ message: 'Something goes wrong' })
   }
 })
 
@@ -132,5 +164,5 @@ const uploadPhoto = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  createUser, getUser, auth, uploadPhoto, updateUser, login
+  createUser, getUser, auth, uploadPhoto, updateUser, login, subscribe, unsubscribe, getUsers
 }

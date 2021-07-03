@@ -1,11 +1,10 @@
-import { Avatar, Button, IconButton, makeStyles, TextField } from '@material-ui/core'
-import React from 'react'
+import { Avatar, Button, Divider, IconButton, makeStyles, TextField } from '@material-ui/core'
+import React, { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserInfo, loadDefaultImage } from 'store/selectors/Selectors'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
-import { addNewPost } from 'store/ducks/PostsList/PostsListReducer'
 import { addNewTweet } from 'store/ducks/AddTweet/AddTweetReducer'
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +58,15 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     height: 48,
     width: 48
-  }
+  },
+  preview: {
+    marginTop: 15,
+    width: 100,
+    maxHeight: 100,
+    borderRadius: 15,
+    objectFit: 'contain',
+    marginLeft: 60
+  },
 }));
 
 
@@ -67,14 +74,19 @@ export const SubmitForm = () => {
   const classes = useStyles()
   const user = useSelector(state => getUserInfo(state))
   const defaultUserImage = useSelector(state => loadDefaultImage(state))
+  const [imagePreview, setImagePreview] = useState(null)
   const dispatch = useDispatch()
 
   const { handleSubmit, control, register, formState: { isDirty } } = useForm()
 
   const handelSubmit = ({ body, image }) => {
     dispatch(addNewTweet({ body, image: image[0] }))
+    setImagePreview(null)
+  }
 
-    // history.push('/main')
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    setImagePreview(URL.createObjectURL(file))
   }
 
   const handleError = (errors) => {
@@ -99,6 +111,7 @@ export const SubmitForm = () => {
           rowsMax={20} />}
       />
     </div>
+    {imagePreview && <img src={imagePreview} alt='preview' className={classes.preview} />}
     <div className={classes.formFooter}>
       <IconButton
         component="label"
@@ -106,8 +119,7 @@ export const SubmitForm = () => {
         className={classes.icon}
       >
         <ImageOutlinedIcon style={{ fontSize: 24 }} />
-
-        <input type="file" hidden name='image' ref={register} />
+        <input type="file" hidden name='image' ref={register} onChange={(e) => handleChange(e)} />
       </IconButton>
       <Button
         className={classes.button}

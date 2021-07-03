@@ -2,10 +2,9 @@ import { IconButton, makeStyles } from '@material-ui/core'
 import React from 'react'
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
-import NotificationIcon from '@material-ui/icons/NotificationsNoneOutlined';
-import MessageIcon from '@material-ui/icons/EmailOutlined';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import BookmarkIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import ListIcon from '@material-ui/icons/ListAltOutlined';
+import HowToRegOutlinedIcon from '@material-ui/icons/HowToRegOutlined';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import UserIcon from '@material-ui/icons/PermIdentityOutlined';
 import CreateIcon from '@material-ui/icons/Create';
@@ -17,7 +16,6 @@ import { SubmitForm } from './SubmitForm';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { addNewPost } from 'store/ducks/PostsList/PostsListReducer'
 import { getUserInfo } from 'store/selectors/Selectors';
 
 const useStyles = makeStyles((theme) => ({
@@ -119,33 +117,57 @@ export const SideMenu = () => {
           </Link>
         </li>
         <li className={classes.sideMenuListItem}>
+          <Link to="/following">
+            <div>
+              <HowToRegOutlinedIcon className={classes.sideMenuListItemIcon} />
+              <Hidden smDown>
+                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                  Following
+                </Typography>
+              </Hidden>
+            </div>
+          </Link>
+        </li>
+        <li className={classes.sideMenuListItem}>
           <Link to="/home/search">
             <div>
               <SearchIcon className={classes.sideMenuListItemIcon} />
               <Hidden smDown>
                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
                   Search
-              </Typography>
+                </Typography>
               </Hidden>
             </div>
           </Link>
         </li>
         <li className={classes.sideMenuListItem}>
-          <div>
-            <BookmarkIcon className={classes.sideMenuListItemIcon} />
-
-            <Hidden smDown>
-              <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                Bookmarks
-              </Typography>
-            </Hidden>
-          </div>
+          <Link to="/home/users">
+            <div>
+              <PeopleOutlineIcon className={classes.sideMenuListItemIcon} />
+              <Hidden smDown>
+                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                  Users
+                </Typography>
+              </Hidden>
+            </div>
+          </Link>
+        </li>
+        <li className={classes.sideMenuListItem}>
+          <Link to="/home/bookmarks">
+            <div>
+              <BookmarkIcon className={classes.sideMenuListItemIcon} />
+              <Hidden smDown>
+                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                  Bookmarks
+                </Typography>
+              </Hidden>
+            </div>
+          </Link>
         </li>
         <li className={classes.sideMenuListItem}>
           <Link to={`/home/user/${_id}`}>
             <div>
               <UserIcon className={classes.sideMenuListItemIcon} />
-
               <Hidden smDown>
                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
                   Profile

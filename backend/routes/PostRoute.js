@@ -10,12 +10,18 @@ const { getPost,
   getAllPosts,
   createNewPost,
   getPostsByTag,
-  deletePost } = require('../controllers/PostControllers')
+  deletePost,
+  getPostsByBookmarks,
+  getPostsBySubscriptions, addBookmarks,
+  deleteBookmarks, getUserPosts } = require('../controllers/PostControllers')
 
 const router = express.Router()
 
-router.get('/posts', getAllPosts)
+router.get('/posts/', getAllPosts)
+router.get('/posts/:id', authMiddleware, getUserPosts)
 router.get('/posts/Search', getPostsByTag)
+router.get('/bookmarks', authMiddleware, getPostsByBookmarks)
+router.get('/subscriptions', authMiddleware, getPostsBySubscriptions)
 router.post('/post', [
   check('body', 'Body not should be empty').notEmpty(),
   authMiddleware
@@ -26,5 +32,7 @@ router.get('/post/:id', getPost)
 router.post('/post/:id/comment', authMiddleware, createNewComment)
 router.put('/post/:id/like', authMiddleware, addLike)
 router.delete('/post/:id/like', authMiddleware, deleteLike)
+router.put('/post/:id/bookmarks', authMiddleware, addBookmarks)
+router.delete('/post/:id/bookmarks', authMiddleware, deleteBookmarks)
 
 module.exports = router

@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     type: String,
     require: true
   },
-  data: {
+  date: {
     type: Date,
     default: Date.now
   },
@@ -33,9 +33,16 @@ const UserSchema = new Schema({
   tweets: {
     type: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
   },
-  bookmarks: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+  subscriptions: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   }
+})
+
+UserSchema.set('toJSON', {
+  transform: function (_, obj) {
+    delete obj.password;
+    return obj;
+  },
 })
 
 module.exports = model('User', UserSchema)

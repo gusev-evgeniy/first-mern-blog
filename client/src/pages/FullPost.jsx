@@ -1,14 +1,12 @@
-import { Avatar, CircularProgress, Divider, Grid, IconButton, LinearProgress, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Avatar, CircularProgress, makeStyles, Paper, Typography } from '@material-ui/core'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, withRouter } from 'react-router-dom'
-import { changeIsLoading, deleteLike, fetchData, loadPost, sendLike } from 'store/ducks/PostDetail/PostDetailReducer'
+import { changeIsLoading, loadPost } from 'store/ducks/PostDetail/PostDetailReducer'
 import { getPostDetail, getPostDetailStatus, getUserInfo, isAuthInfo, loadDefaultImage } from 'store/selectors/Selectors'
-import CommentIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import RepostIcon from '@material-ui/icons/RepeatOutlined';
-import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import { ReplyTweet } from 'components/ReplyTweet'
-import { PostCard } from 'components/PostCard'
+import { TweetFooter } from 'components/TweetFooter'
+import * as dayjs from 'dayjs'
 
 const useStyles = makeStyles((theme) => ({
   tweetUserName: {
@@ -20,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fullTweet: {
     padding: 22,
-    paddingBottom: 0,
+    paddingBottom: 20,
     maxWidth: 600,
+    borderBottom: '1px solid #E6ECF0',
   },
   tweetAvatar: {
     width: theme.spacing(6.5),
@@ -35,15 +34,6 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: 1.3125,
     wordBreak: 'break-word',
   },
-  fullTweetFooter: {
-    margin: '0 auto',
-    borderTop: '1px solid #E6ECF0',
-    left: 0,
-    maxWidth: '100%',
-    justifyContent: 'space-around',
-    padding: '2px 0',
-    marginTop: 20,
-  },
   tweetFooter: {
     display: 'flex',
     position: 'relative',
@@ -56,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll'
   },
   comment: {
-    border: '1px solid rgb(245, 248, 250)'
+    borderTop: '1px solid #E6ECF0'
   },
   postImage: {
     marginTop: 15,
@@ -64,19 +54,24 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     borderRadius: 15,
     objectFit: 'contain'
-  }
+  },
+  divider: {
+    display: 'flex',
+    flex: 1,
+    height: 13,
+    backgroundColor: '#f7f9fa',
+  },
 }))
 
 const FullPost = ({ match }) => {
   const classes = useStyles()
-  const postData = useSelector(state => getPostDetail(state))
-  const isLoading = useSelector(state => getPostDetailStatus(state))
-  const isAuth = useSelector(state => isAuthInfo(state))
-  const { _id } = useSelector(state => getUserInfo(state))
-  const defaultUserImage = useSelector(state => loadDefaultImage(state))
+  const postData = useSelector(getPostDetail)
+  const isLoading = useSelector(getPostDetailStatus)
+  const isAuth = useSelector(isAuthInfo)
+  const { _id } = useSelector(getUserInfo)
+  const defaultUserImage = useSelector(loadDefaultImage)
   const dispatch = useDispatch()
   const postId = match.params.id
-
 
   useEffect(() => {
     dispatch(loadPost(postId))
@@ -86,7 +81,7 @@ const FullPost = ({ match }) => {
     return (() => {
       dispatch(changeIsLoading(true))
     })
-  }, [])
+  }, [dispatch])
 
 
   if (!isAuth) {
@@ -97,38 +92,13 @@ const FullPost = ({ match }) => {
     return <CircularProgress />
   }
 
-  const handleSubmitLike = (postId) => {
-    dispatch(sendLike(postId))
-  }
-
-  const handleDeleteLike = (postId) => {
-    dispatch(deleteLike(postId))
-  }
-
-  /*const showLikeButton = () => {
-    if (postData.likes.includes(userId)) {
-      return returnInitialLikeButton(true, handleDeleteLike)
-    } else {
-      return returnInitialLikeButton(false, handleSubmitLike)
-    }
-  }
-
-  const returnInitialLikeButton = (isLiked, actionFunction) => {
-    return <IconButton aria-label="add to favorites" color={isLiked ? "primary" : "default"} onClick={() => actionFunction(postId, userId)}>
-      <ThumbUpAltIcon />
-      <span>
-        {postData.likes.length}
-      </span>
-    </IconButton>
-  }*/
-
   return <Paper>
     <div className={classes.fullTweet}>
       <div className={classes.tweetsHeaderUser}>
         <Avatar src={postData.author.photo ? `data:${postData.author.photo.contentType};base64, ${postData.author.photo.imageBase64}` : defaultUserImage} className={classes.tweetAvatar} alt={`Аватарка пользователя`} />
         <Typography>
           <b>{postData.author.name}</b>&nbsp;
-        <div>
+          <div>
             <span className={classes.tweetUserName}>@{postData.author.name}</span>&nbsp;
           </div>
         </Typography>
@@ -139,21 +109,13 @@ const FullPost = ({ match }) => {
       </Typography>
       <Typography>
         <span className={classes.tweetUserName}>
-          {postData.created}
+          {dayjs(postData.created).format('H:mm ')}
+          &#183; {dayjs(postData.created).format(' DD MMM, YYYY')}
         </span>
       </Typography>
-      <div className={`${classes.tweetFooter} ${classes.fullTweetFooter}`} >
-        <IconButton color='primary'>
-          <LikeIcon style={{ fontSize: 20 }} />
-        </IconButton>
-        <IconButton color='primary'>
-          <RepostIcon style={{ fontSize: 20 }} />
-        </IconButton>
-        <IconButton color='primary'>
-          <CommentIcon style={{ fontSize: 20 }} />
-        </IconButton>
-      </div>
+      {/* <TweetFooter postData={postData} userId={_id} /> */}
     </div>
+    <div className={classes.divider}></div>
     <div className={classes.tweetComments}>
       {postData.comments.map(item => <div className={classes.comment} key={item._id} >
         <ReplyTweet data={item} defaultUserImage={defaultUserImage} />

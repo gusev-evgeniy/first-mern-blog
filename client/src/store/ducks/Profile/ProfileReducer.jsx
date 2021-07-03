@@ -3,12 +3,12 @@ import { profileAPI } from './ProfileApi'
 const FETCH = 'profile/Fetch'
 const CHANGE_STATUS = 'profile/CHANGE_STATUS'
 
-const initialState = {
+const initiaState = {
   status: null,
   profile: {},
 }
 
-export const ProfileReducer = (state = initialState, action) => {
+export const ProfileReducer = (state = initiaState, action) => {
   switch (action.type) {
     case CHANGE_STATUS:
       return { ...state, status: action.payload }

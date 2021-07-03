@@ -24,7 +24,7 @@ export const updateFormAction = (formData) => ({ type: UPDATE_FORM, payload: for
 export const changeStatusAction = (status) => ({ type: CHANGE_STATUS, payload: status })
 
 export const addNewTweet = (data) => async dispatch => {
-  const { body, image, replyPostId } = data
+  const { body, image, replyPostId, author } = data
   let response
   try {
     dispatch(changeStatusAction('LOADING'))
@@ -38,12 +38,11 @@ export const addNewTweet = (data) => async dispatch => {
     if (image) {
       response = await dispatch(sendTweetImage(image, response.data._id))
     }
-
     dispatch(requestTopTags())
     dispatch(unshiftNewTweetAction(response.data))
   } catch (error) {
     dispatch(changeStatusAction('ERROR'))
-    console.log(error.response.data.message)
+    console.log(error)
   }
 }
 

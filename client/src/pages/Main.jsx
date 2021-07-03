@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isAuthInfo } from 'store/selectors/Selectors'
 import { RightSide } from 'components/RightSide'
 import { Home } from './Home';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import FullPostPage from './FullPost'
 import { Search } from './Search'
 import { requestTopTags } from 'store/ducks/Tags/TagReducer'
 import { useEffect } from 'react'
 import { SideMenu } from 'components/SideMenu'
 import { Profile } from './Profile'
+import { Bookmarks } from './Bookmarks'
+import { Users } from './Users'
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -36,10 +38,17 @@ const useStyles = makeStyles((theme) => ({
 export const Main = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const isAuth = useSelector(isAuthInfo)
+
 
   useEffect(() => {
     dispatch(requestTopTags())
   }, [dispatch])
+
+
+  if (!isAuth) {
+    return < Redirect to='/login' />
+  }
 
   return <Grid container>
     <Grid item md={3} sm={1} xs={12}>
@@ -55,8 +64,14 @@ export const Main = () => {
       <Route path='/home/search'>
         <Search />
       </Route>
+      <Route path='/home/bookmarks'>
+        <Bookmarks />
+      </Route>
       <Route path='/home/user/:id'>
         <Profile />
+      </Route>
+      <Route path='/home/users'>
+        <Users />
       </Route>
     </Grid>
     <Grid item md={3} sm={6} xs={12} >

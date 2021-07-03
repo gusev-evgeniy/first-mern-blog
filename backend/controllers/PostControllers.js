@@ -3,6 +3,7 @@ const fs = require('fs')
 const { v4: uuidv4 } = require('uuid')
 
 const Post = require('../models/PostModel')
+const User = require('../models/UserModel')
 const Comment = require('../models/CommentModel')
 
 const getAllPosts = asyncHandler(async (req, res) => {
@@ -21,15 +22,53 @@ const getAllPosts = asyncHandler(async (req, res) => {
   }
 })
 
-const getPost = asyncHandler(async (req, res) => {
+const getUserPosts = asyncHandler(async (req, res) => {
   try {
-    const post = await Post
-      .findById(req.params.id)
-      .populate('author', ['name', 'photo']).populate({
-        path: 'comments',
-        populate: { path: 'author', select: ['name', 'photo'] }
-      })
-    res.json(post)
+    let posts = await Post.find({ 'author': req.params.id }).sort([['created', '-1']]).populate('author', ['name', 'photo']).populate({
+      path: 'reply',
+      populate: {
+        path: 'author',
+        select: ['name', 'photo']
+      }
+    })
+
+    res.json(posts)
+  } catch (error) {
+    res.status(400).json({ message: 'Something goes wrong' })
+  }
+})
+
+const getPostsBySubscriptions = asyncHandler(async (req, res) => {
+  console.log('111')
+
+  try {
+    console.log('111')
+    const profile = await User.findById(req.user.id)
+
+    const posts = await Post.find({ $or: [{ 'author': { $in: profile.subscriptions } }, { 'author': req.user.id }] }).sort([['created', '-1']]).populate('author', ['name', 'photo']).populate({
+      path: 'reply',
+      populate: {
+        path: 'author',
+        select: ['name', 'photo']
+      }
+    })
+    console.log('222')
+    res.json(posts)
+  } catch (error) {
+    res.status(400).json({ message: 'Something goes wrong' })
+  }
+})
+
+const getPostsByBookmarks = asyncHandler(async (req, res) => {
+  try {
+    let posts = await Post.find({ bookmarks: req.user.id }).sort([['created', '-1']]).populate('author', ['name', 'photo']).populate({
+      path: 'reply',
+      populate: {
+        path: 'author',
+        select: ['name', 'photo']
+      }
+    })
+    res.json(posts)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }
@@ -50,16 +89,37 @@ const getPostsByTag = asyncHandler(async (req, res) => {
   }
 })
 
+const getPost = asyncHandler(async (req, res) => {
+  try {
+    const post = await Post
+      .findById(req.params.id)
+      .populate('author', ['name', 'photo']).populate({
+        path: 'comments',
+        populate: { path: 'author', select: ['name', 'photo'] }
+      })
+    res.json(post)
+  } catch (error) {
+    res.status(400).json({ message: 'Something goes wrong' })
+  }
+})
+
 const createNewPost = asyncHandler(async (req, res) => {
   let { body, replyPostId } = req.body
-  console.log(body.split(' '))
+
   const tags = body.replace('\n', ' ').split(' ').filter(word => word.startsWith('#') && word.length > 1).map(word => word.substring(1))
+  const uniqueTags = Array.from(new Set(tags))
 
   try {
-    const post = await Post.create({ body, tags, author: req.user.id, reply: replyPostId })
+    const post = await Post.create({ body, tags: uniqueTags, author: req.user.id, reply: replyPostId })
     await post.save()
 
-    res.json(post.populate('author', ['name', 'photo']))
+    const newPost = await Post
+      .findById(post._id)
+      .populate('author', ['name', 'photo']).populate({
+        path: 'comments',
+        populate: { path: 'author', select: ['name', 'photo'] }
+      })
+    res.json(newPost)
   } catch (error) {
     res.status(400).json({ message: 'Something goes wrong' })
   }
@@ -67,7 +127,7 @@ const createNewPost = asyncHandler(async (req, res) => {
 
 const createNewPhotoPost = asyncHandler(async (req, res) => {
   const file = req.file
-  console.log(file)
+
   if (!file) {
     return res.status(400).json({ message: 'Please choose files' })
   }
@@ -142,6 +202,32 @@ const deleteLike = asyncHandler(async (req, res) => {
   }
 })
 
+const addBookmarks = asyncHandler(async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.id)
+    post.bookmarks.push(req.user.id)
+
+    await post.save()
+
+    res.json({ message: 'Success' })
+  } catch (error) {
+    req.status(400).json({ message: 'Something went wrong' })
+  }
+})
+
+const deleteBookmarks = asyncHandler(async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.id)
+    post.bookmarks.remove(req.user.id)
+
+    await post.save()
+
+    res.json({ message: 'Success' })
+  } catch (error) {
+    req.status(400).json({ message: 'Something went wrong' })
+  }
+})
+
 module.exports = {
   getPost,
   createNewComment,
@@ -151,5 +237,10 @@ module.exports = {
   createNewPost,
   deletePost,
   getPostsByTag,
-  createNewPhotoPost
+  createNewPhotoPost,
+  getPostsBySubscriptions,
+  getPostsByBookmarks,
+  addBookmarks,
+  deleteBookmarks,
+  getUserPosts
 }

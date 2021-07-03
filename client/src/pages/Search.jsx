@@ -1,17 +1,25 @@
 import { PostCard } from 'components/PostCard';
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { getSearchPosts, getUserInfo } from 'store/selectors/Selectors';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeStatus, fetchPosts } from 'store/ducks/PostsList/PostsListReducer';
+import { getPostsList, getUserInfo } from 'store/selectors/Selectors';
 
-export const Search = (props) => {
-  const location = useLocation()
-  const { postsList } = useSelector(state => getSearchPosts(state))
-  debugger
+export const Search = () => {
+  const posts = useSelector(state => getPostsList(state))
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    return () => {
+      dispatch(changeStatus(true))
+      dispatch(fetchPosts([]))
+    }
+  }, [dispatch])
+
   const { _id } = useSelector(state => getUserInfo(state))
   return (
     <div>
-      {postsList.map(tweet => <PostCard key={tweet._id} postData={tweet} userId={_id} />)}
+      {posts.map(tweet => <PostCard key={tweet._id} postData={tweet} userId={_id} />)}
     </div>
   )
 }

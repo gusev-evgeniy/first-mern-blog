@@ -32,9 +32,9 @@ export const Login = () => {
   const classes = useStyles()
 
   const dispatch = useDispatch()
-  const isAuth = useSelector(state => isAuthInfo(state))
-  const { loginError } = useSelector(state => showError(state))
-  const isFetching = useSelector(state => isFetchingInfo(state))
+  const isAuth = useSelector(isAuthInfo)
+  const { loginError } = useSelector(showError)
+  const isFetching = useSelector(isFetchingInfo)
 
   const { handleSubmit, control, formState: { errors } } = useForm()
 
@@ -47,7 +47,7 @@ export const Login = () => {
   }
 
   if (isAuth) {
-    return <Redirect to='/posts-list' />
+    return <Redirect to='/home' />
   }
 
   const registerOptions = {

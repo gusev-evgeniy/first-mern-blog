@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-end',
     padding: '15px 13px',
     zIndex: 1,
-    fontSize: 15,
+    fontSize: 18,
     '&:hover': {
       backgroundColor: 'rgb(235, 238, 240)',
     },
   },
   tweetAvatar: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     marginRight: 15,
   },
   tweetHeader: {
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
   },
   tweetDate: {
+    fontSize: 15,
     color: '#5b7083',
   },
   likesCount: {

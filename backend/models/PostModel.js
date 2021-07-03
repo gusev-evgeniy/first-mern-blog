@@ -14,6 +14,7 @@ const PostSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User' },
   likes: [Schema.Types.ObjectId],
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  bookmarks: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   created: {
     type: Date,
     default: Date.now

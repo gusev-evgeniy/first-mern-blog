@@ -1,6 +1,6 @@
 import { instance } from '../../api';
+import { fetchPosts } from '../PostsList/PostsListReducer';
 
-const FETCH = 'searchReducer/FETCH'
 const CHANGE_STATUS = 'searchReducer/CHANGE_STATUS'
 
 const initialState = {
@@ -12,8 +12,6 @@ const initialState = {
 
 export const SearchReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH:
-      return { ...state, postsList: action.payload }
     case CHANGE_STATUS:
       return { ...state, status: action.payload }
     default:
@@ -21,16 +19,14 @@ export const SearchReducer = (state = initialState, action) => {
   }
 }
 
-const fetchPosts = (posts) => ({ type: FETCH, payload: posts })
 const changeStatus = (status) => ({ type: CHANGE_STATUS, payload: status })
 
 export const requestSearchPosts = (tag) => async dispatch => {
   try {
     dispatch(changeStatus('LOADING'))
-    const response = await instance.get(`/search/?tag=${tag}`)
-    debugger
+    const { data } = await instance.get(`/search/?tag=${tag}`)
     dispatch(changeStatus('SUCCESS'))
-    dispatch(fetchPosts(response.data))
+    dispatch(fetchPosts(data))
   } catch (e) {
     dispatch(changeStatus('ERROR'))
     console.log(e)

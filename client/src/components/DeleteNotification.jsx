@@ -1,4 +1,4 @@
-import { Button, Card, makeStyles, Typography } from '@material-ui/core'
+import { Button, makeStyles } from '@material-ui/core'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { deletePost } from 'store/ducks/PostsList/PostsListReducer'

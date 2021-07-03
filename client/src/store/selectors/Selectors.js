@@ -27,7 +27,7 @@ export const isFetchingInfo = (state) => {
 }
 
 export const isInitializedInfo = (state) => {
-  return state.InitializeReducer.isInitialized
+  return state.InitializeReducer
 }
 
 export const showError = (state) => {
@@ -48,4 +48,12 @@ export const getSearchPosts = (state) => {
 
 export const getProfileInfo = (state) => {
   return state.ProfileReducer
+}
+
+export const getUsersListInfo = (state) => {
+  return state.UsersListReducer
+}
+
+export const getSubscriptionsInfo = (state) => {
+  return state.SubscribeReducer
 }

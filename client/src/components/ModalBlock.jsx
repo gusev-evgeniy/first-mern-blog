@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export const ModalBlock = ({ onClose, visible = false, children }) => {
+export const ModalBlock = ({ onClose, visible = false, children, title }) => {
 
   if (!visible) {
     return null;
@@ -12,7 +12,7 @@ export const ModalBlock = ({ onClose, visible = false, children }) => {
   return (
     <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">
-        Reply
+        {title}
       </DialogTitle>
       <DialogContent>{children}</DialogContent>
     </Dialog>
